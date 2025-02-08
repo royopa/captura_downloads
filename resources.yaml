@@ -1,0 +1,30 @@
+resources:
+  - name: Debêntures - Emissões
+    url: https://www.debentures.com.br/exploreosnd/consultaadados/emissoesdedebentures/puhistorico_e.asp?op_exc=Nada&ativo=&dt_ini=01/01/2000&dt_fim=DD/MM/YYYY&Submit.x=30&Submit.y=6
+    file_name: 'debentures_emissoes.csv'
+  - name: Debêntures - Preços de Negociação
+    url: https://www.debentures.com.br/exploreosnd/consultaadados/mercadosecundario/precosdenegociacao_e.asp?op_exc=Nada&emissor=&isin=&ativo=&dt_ini=20000101&dt_fim=YYYYMMDD
+    file_name: 'debentures_mercado_secundario_precos_negociacao.csv'
+  - name: Debêntures - PU Histórico
+    url: https://www.debentures.com.br/exploreosnd/consultaadados/emissoesdedebentures/puhistorico_e.asp?op_exc=Nada&ativo=&dt_ini=01/02/2020&dt_fim=DD/MM/YYYY&Submit.x=16&Submit.y=14
+    file_name: 'debentures_mercado_pu_historico.csv'
+  - name: Relatório de Vendas
+    url: https://people.sc.fsu.edu/~jburkardt/data/csv/hw_200.csv
+    file_name: 'b3_vendas.csv'
+  - name: Dados de População
+    url: https://people.sc.fsu.edu/~jburkardt/data/csv/airtravel.csv
+  - name: Índice de Desenvolvimento Humano
+    url: https://people.sc.fsu.edu/~jburkardt/data/csv/cities.csv
+    file_name: 'b3_cities.csv'
+  - name: Estatísticas de Tráfego
+    url: https://people.sc.fsu.edu/~jburkardt/data/csv/grades.csv
+    file_name: 'b3_grades.csv'
+  - name: CVM - Fundos de Investimento - Não Adaptados RCVM175
+    url: https://dados.cvm.gov.br/dados/FI/CAD/DADOS/cad_fi.csv
+    file_name: 'cad_fi.csv'
+  - name: CVM - Extrato das Informações
+    url: https://dados.cvm.gov.br/dados/FI/DOC/EXTRATO/DADOS/extrato_fi.csv
+    file_name: 'extrato_fi.csv'
+  - name: CVM - Fundos de Investimento, Classes e Subclasses de Cotas CVM175
+    url: https://dados.cvm.gov.br/dados/FI/CAD/DADOS/registro_fundo_classe.zip
+    file_name: 'registro_fundo_classe.zip'
