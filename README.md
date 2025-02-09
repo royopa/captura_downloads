@@ -44,10 +44,6 @@ $ blue .
 $ ruff format .
 ```
 
-```sh
-$ python example.py
-```
-
 # Running PowerShell Scripts to Download Files
 
 ```sh

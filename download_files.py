@@ -9,14 +9,15 @@ from datetime import datetime, timedelta
 
 # Função para ler o conteúdo do YAML
 def read_yaml(path):
-    with open(path, 'r', encoding='utf-8') as file:
-        return yaml.safe_load(file)['resources']
+    with open(path, "r", encoding="utf-8") as file:
+        return yaml.safe_load(file)["resources"]
+
 
 # Função para substituir variáveis de data na URL
 def replace_date_variables(url, type_date, calendar_b3):
-    if type_date == 'dia_anterior':
+    if type_date == "dia_anterior":
         date = calendar_b3.offset(datetime.now(), -1)
-    elif type_date == 'mes_anterior':
+    elif type_date == "mes_anterior":
         first_day_of_current_month = datetime.now().replace(day=1)
         date = first_day_of_current_month - timedelta(days=1)
     else:
@@ -27,7 +28,7 @@ def replace_date_variables(url, type_date, calendar_b3):
     date_arquivo = date.strftime("%Y%m%d")
     date_curta_ano2digitos = date.strftime("%y%m%d")
     date_arquivo_mes = date.strftime("%Y%m")
-    
+
     url = url.replace("DD/MM/YYYY", date_formatada)
     url = url.replace("YYYY-MM-DD", date_curta)
     url = url.replace("YYYYMMDD", date_arquivo)
@@ -35,23 +36,24 @@ def replace_date_variables(url, type_date, calendar_b3):
     url = url.replace("YYYYMM", date_arquivo_mes)
     return url
 
+
 # Função para salvar a resposta como arquivo
 def save_response(url, destination_path, type_response):
     response = requests.get(url)
     response.raise_for_status()  # Lança um erro se o download falhar
 
-    if type_response == 'json':
-        with open(destination_path, 'w', encoding='utf-8') as file:
+    if type_response == "json":
+        with open(destination_path, "w", encoding="utf-8") as file:
             file.write(response.text)
-    elif type_response == 'base64':
-        content = response.text.replace('"', '')
+    elif type_response == "base64":
+        content = response.text.replace('"', "")
         decoded_bytes = base64.b64decode(content)
-        with open(destination_path, 'wb') as file:
+        with open(destination_path, "wb") as file:
             file.write(decoded_bytes)
     else:
-        with open(destination_path, 'wb') as file:
+        with open(destination_path, "wb") as file:
             file.write(response.content)
-    
+
     print(colored.green(f"Arquivo {type_response} salvo em '{destination_path}'"))
 
 
@@ -94,20 +96,18 @@ def main():
 
     # Imprima as informações de cada recurso
     for resource in resources:
-        if resource.get('url'):
+        if resource.get("url"):
             print_resource_info(resource)
 
     # Faça o download de cada recurso
     for resource in resources:
-        if resource.get('url'):
+        if resource.get("url"):
             print(f"Processando recurso: {resource['name']}")
             print(f"URL original: {resource['url']}")
 
             # Substitua variáveis de data na URL
             url = replace_date_variables(
-                resource['url'],
-                resource.get('type_date', 'data_atual'),
-                calendar_b3
+                resource["url"], resource.get("type_date", "data_atual"), calendar_b3
             )
             print(f"URL processada: {url}")
 
@@ -119,10 +119,16 @@ def main():
 
             try:
                 # Salve a resposta conforme o tipo
-                save_response(url, caminho_destino, resource['type_response'])
-                print(colored.green(f"Recurso '{resource['name']}' baixado com sucesso."))
+                save_response(url, caminho_destino, resource["type_response"])
+                print(
+                    colored.green(f"Recurso '{resource['name']}' baixado com sucesso.")
+                )
             except Exception as e:
-                print(colored.red(f"Falha ao baixar o recurso '{resource['name']}' de '{url}'. Erro: {e}"))
+                print(
+                    colored.red(
+                        f"Falha ao baixar o recurso '{resource['name']}' de '{url}'. Erro: {e}"
+                    )
+                )
 
 
 if __name__ == "__main__":
