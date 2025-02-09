@@ -1,13 +1,27 @@
-[tool.poetry]
+[project]
 name = "captura-downloads"
 version = "0.1.0"
 description = ""
-authors = ["Rodrigo Prado de Jesus <royopa@gmail.com>"]
+authors = [
+    {name = "Rodrigo Prado de Jesus",email = "royopa@gmail.com"}
+]
 readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "requests (>=2.32.3,<3.0.0)",
+    "requests-html (>=0.10.0,<0.11.0)",
+    "pandas (>=2.2.3,<3.0.0)",
+    "selenium (>=4.28.1,<5.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
 
 [tool.poetry.dependencies]
 python = "^3.11"
-
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.4"
@@ -21,13 +35,9 @@ mkdocs-material = "^9.6.3"
 mkdocstrings = "^0.28.0"
 mkdocstrings-python = "^1.14.6"
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
-
 [tool.isort]
 profile = "black"
-src_paths = [".", "test"]
+src_paths = [".", "captura_downloads", "test"]
 honor_noqa = true
 line_length = 79
 
