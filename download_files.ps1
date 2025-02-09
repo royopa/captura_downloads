@@ -44,9 +44,14 @@ function Save-Response {
         'base64' {
             # Baixar e salvar como Base64
             $responseString = Invoke-WebRequest -Uri $url -UseBasicParsing
-            $decodedBytes = [System.Convert]::FromBase64String($responseString.Content)
-            [System.IO.File]::WriteAllBytes($destinationPath, $decodedBytes)
-            Write-Host "Arquivo Base64 salvo em '$destinationPath'" -ForegroundColor Green
+            $content = $responseString.Content.Trim('"')  # Remove as aspas do início e do final, se existirem
+            try {
+                $decodedBytes = [System.Convert]::FromBase64String($content)
+                [System.IO.File]::WriteAllBytes($destinationPath, $decodedBytes)
+                Write-Host "Arquivo Base64 salvo em '$destinationPath'" -ForegroundColor Green
+            } catch {
+                Write-Host "Falha ao decodificar a string Base64." -ForegroundColor Red
+            }
         }
         default {
             # Baixar e salvar como binário

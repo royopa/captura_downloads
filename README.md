@@ -1,42 +1,66 @@
 # Getting Started
-O Python >=3.12 é necessário, o poetry >=2.0.0 e <3.0.0 é necessário.
+
+O Python >=3.12 e o poetry >=2.0.0 e <3.0.0 são necessários para esse projeto.
 
 # Configurar o ambiente
+
 ```sh
 $ poetry install
 ```
 
 # Inicializar o ambiente
+
 ```sh
 $ poetry env activate
 ```
 
 # Running tests
+
 ```sh
-$ poetry run task test
+$ task test
 ```
 
 # Running linter
+
 ```sh
-$ poetry run task lint
+$ task lint
 ```
 
 # Running docs
+
 ```sh
-$ poetry run task docs
+$ task docs
 ```
 
 # Applying Blue linter
+
 ```sh
-$ poetry run blue .
+$ blue .
 ```
 
 # Applying Ruff linter
+
 ```sh
-$ poetry run ruff format .
+$ ruff format .
 ```
 
-# 
 ```sh
-$ poetry run python example.py
+$ python example.py
+```
+
+# Running PowerShell Scripts to Download Files
+
+```sh
+$ powershell ./dependencias.ps1
+```
+
+```sh
+$ powershell ./download_files.ps1
+```
+
+
+# Running Python Scripts to Download Files
+
+```sh
+$ python ./download_files.py
 ```

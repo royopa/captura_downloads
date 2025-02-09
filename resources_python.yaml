@@ -1,0 +1,46 @@
+resources:
+  ##############################################################################
+  # Bases ANBIMA
+  ##############################################################################
+  - name: ANBIMA - Mercado Secundário Debêntures
+    url: https://www.anbima.com.br/informacoes/merc-sec-debentures/arqs/dbYYMMDD.txt
+    file_name: 'anbima_mercado_secundario_debentures.txt'
+    type_response: txt
+    type_date: dia_anterior
+  - name: ANBIMA - Mercado Secundário Títulos Públicos
+    url: https://www.anbima.com.br/informacoes/merc-sec/arqs/msYYMMDD.txt
+    file_name: 'anbima_mercado_secundario_titulos_publicos.txt'
+    type_response: txt
+    type_date: dia_anterior
+  - name: ANBIMA - Indicadores Financeiros
+    url: https://www.anbima.com.br/informacoes/indicadores/arqs/indicadores.xls
+    file_name: anbima_indicadores.xls
+    type_response: xls
+  ##############################################################################
+  # Bases BACEN    
+  ##############################################################################
+  - name: BACEN - Negociação de TPF Mercado Secundário - Extragrupo - mês corrente
+    url: https://www4.bcb.gov.br/pom/demab/negociacoes/download/NegEYYYYMM.ZIP
+    file_name: bacen_negociacao_tpf_extragrupo_mes_corrente.zip
+    type_response: zip
+    type_date: mes_atual
+  - name: BACEN - Negociação de TPF Mercado Secundário - Extragrupo - mês anterior
+    url: https://www4.bcb.gov.br/pom/demab/negociacoes/download/NegEYYYYMM.ZIP
+    file_name: bacen_negociacao_tpf_extragrupo_mes_anterior.zip
+    type_response: zip
+    type_date: mes_anterior
+  ##############################################################################
+  # Bases B3
+  ##############################################################################
+  - name: B3 - ETFs listados
+    url: https://sistemaswebb3-listados.b3.com.br/fundsProxy/fundsCall/GetListFundDownload/eyJ0eXBlRnVuZCI6MjAsInBhZ2VOdW1iZXIiOjEsInBhZ2VTaXplIjo2MH0=
+    file_name: b3_etfs_listados.csv.base64
+    type_response: base64
+  - name: B3 - Get Token
+    url: https://arquivos.b3.com.br/api/download/requestname?fileName=InstrumentsConsolidatedFile&date=YYYY-MM-DD&recaptchaToken=
+    file_name: b3_token.json
+    type_response: json
+  - name: B3 - Get Token
+    url: https://arquivos.b3.com.br/api/download/?token=B3_TOKEN
+    file_name: b3_instrumentos_listados.csv
+    type_response: csv

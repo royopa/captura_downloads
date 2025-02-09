@@ -48,18 +48,6 @@ resources:
   ##############################################################################
   # Bases B3 - Carteiras Teóricas JSON
   ##############################################################################
-  - name: B3 - Carteira Teórica - IBOV
-    url: 'https://sistemaswebb3-listados.b3.com.br/indexProxy/indexCall/GetPortfolioDay/eyJsYW5ndWFnZSI6InB0LWJyIiwicGFnZU51bWJlciI6MSwicGFnZVNpemUiOjEyMCwiaW5kZXgiOiJJQk9WIiwic2VnbWVudCI6IjEifQ=='
-    file_name: 'b3_carteira_teorica_ibov.json'
-    type_response: json
-  - name: B3 - Carteira Teórica - IBRX100
-    url: 'https://sistemaswebb3-listados.b3.com.br/indexProxy/indexCall/GetPortfolioDay/eyJsYW5ndWFnZSI6InB0LWJyIiwicGFnZU51bWJlciI6MSwicGFnZVNpemUiOjEyMCwiaW5kZXgiOiJJQlhYIiwic2VnbWVudCI6IjEifQ=='
-    file_name: 'b3_carteira_teorica_ibrx100.json'
-    type_response: json
-  - name: B3 - Carteira Teórica - IBRX50
-    url: 'https://sistemaswebb3-listados.b3.com.br/indexProxy/indexCall/GetPortfolioDay/eyJsYW5ndWFnZSI6InB0LWJyIiwicGFnZU51bWJlciI6MSwicGFnZVNpemUiOjEyMCwiaW5kZXgiOiJJQlhMIiwic2VnbWVudCI6IjEifQ=='
-    file_name: 'b3_carteira_teorica_ibrx50.json'
-    type_response: json
   - name: B3 - Indicadores Financeiros
     url: 'https://sistemaswebb3-derivativos.b3.com.br/financialIndicatorsProxy/FinancialIndicators/GetFinancialIndicators/eyJsYW5ndWFnZSI6InB0LWJyIn0='
     file_name: 'b3_indicadores_financeiros.json'
@@ -68,25 +56,13 @@ resources:
     url: 'https://sistemaswebb3-derivativos.b3.com.br/financialIndicatorsProxy/ReferenceExchangeRate/GetReferenceExchangeRate/eyJsYW5ndWFnZSI6InB0LWJyIn0='
     file_name: 'b3_taxa_cambio_referencia.json'
     type_response: json
-  - name: B3 - Carteira Teórica - IFIX
-    url: 'https://sistemaswebb3-listados.b3.com.br/indexProxy/indexCall/GetDownloadPortfolioDay/eyJpbmRleCI6IklGSVgiLCJsYW5ndWFnZSI6InB0LWJyIn0='
-    file_name: 'b3_carteira_teorica_ifix.csv.base64'
-    type_response: base64
-  - name: B3 - Carteira Teórica - IAGRO
-    url: 'https://sistemaswebb3-listados.b3.com.br/indexProxy/indexCall/GetDownloadPortfolioDay/eyJpbmRleCI6IkFHRlMiLCJsYW5ndWFnZSI6InB0LWJyIn0='
-    file_name: 'b3_carteira_teorica_iagro.csv.base64'
-    type_response: base64    
+  #- name: B3 - Carteira Teórica - IBOV
+  #  url: 'https://sistemaswebb3-listados.b3.com.br/indexProxy/indexCall/GetPortfolioDay/eyJsYW5ndWFnZSI6InB0LWJyIiwicGFnZU51bWJlciI6MSwicGFnZVNpemUiOjEyMCwiaW5kZXgiOiJJQk9WIiwic2VnbWVudCI6IjEifQ=='
+  #  file_name: 'b3_carteira_teorica_ibov.json'
+  #  type_response: json
   ##############################################################################
   # Bases ANBIMA
   ##############################################################################
-  - name: ANBIMA - Mercado Secundário Debêntures
-    url: https://www.anbima.com.br/informacoes/merc-sec-debentures/arqs/dbYYMMDD.txt
-    file_name: 'anbima_mercado_secundario_debentures.txt'
-    type_response: txt
-  - name: ANBIMA - Mercado Secundário Títulos Públicos
-    url: https://www.anbima.com.br/informacoes/merc-sec/arqs/msYYMMDD.txt
-    file_name: 'anbima_mercado_secundario_titulos_publicos.txt'
-    type_response: txt
   - name: ANBIMA - IMA Completo
     url: https://www.anbima.com.br/informacoes/ima/arqs/ima_completo_p2.txt
     file_name: 'anbima_ima_completo.txt'
@@ -98,10 +74,10 @@ resources:
   ##############################################################################
   # Bases Debêntures
   ##############################################################################
-  #- name: Debêntures - Emissões
-    #url: 
-    #file_name: 'debentures_emissoes.csv'
-    #type_response: csv
+  - name: Debêntures - Características de Emissões
+    url: https://www.debentures.com.br/exploreosnd/consultaadados/emissoesdedebentures/caracteristicas_e.asp?tip_deb=publicas&op_exc=Nada
+    file_name: 'debentures_emissoes_caracteristicas.csv'
+    type_response: csv
   - name: Debêntures - Preços de Negociação
     url: 'https://www.debentures.com.br/exploreosnd/consultaadados/mercadosecundario/precosdenegociacao_e.asp?op_exc=Nada&emissor=&isin=&ativo=&dt_ini=20250101&dt_fim=YYYYMMDD'
     file_name: 'debentures_mercado_secundario_precos_negociacao.csv'
@@ -126,17 +102,6 @@ resources:
     file_name: 'registro_fundo_classe.zip'
     type_response: zip
   ##############################################################################
-  # Bases BACEN    
-  ##############################################################################
-  - name: BACEN - Negociação de TPF Mercado Secundário - Extragrupo - mês corrente
-    url: https://www4.bcb.gov.br/pom/demab/negociacoes/download/NegE202502.ZIP
-    file_name: bacen_negociacao_tpf_extragrupo_mes_corrente.zip
-    type_response: zip
-  - name: BACEN - Negociação de TPF Mercado Secundário - Extragrupo - mês anterior
-    url: https://www4.bcb.gov.br/pom/demab/negociacoes/download/NegE202501.ZIP
-    file_name: bacen_negociacao_tpf_extragrupo_mes_anterior.zip
-    type_response: zip
-  ##############################################################################
   # Bases B3
   ##############################################################################
   - name: B3 - Classificação Setorial
@@ -155,11 +120,3 @@ resources:
     url: https://sistemaswebb3-listados.b3.com.br/fundsProxy/fundsCall/GetListFundDownload/eyJ0eXBlRnVuZCI6MjAsInBhZ2VOdW1iZXIiOjEsInBhZ2VTaXplIjo2MH0=
     file_name: b3_etfs_listados.csv.base64
     type_response: base64
-  - name: B3 - Get Token
-    url: https://arquivos.b3.com.br/api/download/requestname?fileName=InstrumentsConsolidatedFile&date=YYYY-MM-DD&recaptchaToken=
-    file_name: b3_token.json
-    type_response: json
-  - name: B3 - Get Token
-    url: https://arquivos.b3.com.br/api/download/?token=B3_TOKEN
-    file_name: b3_instrumentos_listados.csv
-    type_response: csv

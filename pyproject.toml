@@ -13,7 +13,9 @@ dependencies = [
     "pandas (>=2.2.3,<3.0.0)",
     "selenium (>=4.28.1,<5.0.0)",
     "pendulum (>=3.0.0,<4.0.0)",
-    "python-dotenv (>=1.0.1,<2.0.0)"
+    "python-dotenv (>=1.0.1,<2.0.0)",
+    "bizdays (>=1.0.16,<2.0.0)",
+    "clint (>=0.5.1,<0.6.0)"
 ]
 
 
@@ -54,7 +56,8 @@ addopts = [
 ]
 
 [tool.taskipy.tasks]
-pre_test = "task lint"
+pre_test = "ruff format ."
 test = "pytest -s -x -vv"
 lint = "blue --check --diff . && isort --check --diff ."
 docs = "mkdocs serve"
+ruff = "ruff format ."

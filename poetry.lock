@@ -14,6 +14,18 @@ files = [
 ]
 
 [[package]]
+name = "args"
+version = "0.1.0"
+description = "Command Arguments for Humans."
+optional = false
+python-versions = "*"
+groups = ["main"]
+markers = "python_version == \"3.11\" or python_version >= \"3.12\""
+files = [
+    {file = "args-0.1.0.tar.gz", hash = "sha256:a785b8d837625e9b61c39108532d95b85274acd679693b71ebb5156848fcf814"},
+]
+
+[[package]]
 name = "attrs"
 version = "25.1.0"
 description = "Classes Without Boilerplate"
@@ -73,6 +85,23 @@ chardet = ["chardet"]
 charset-normalizer = ["charset-normalizer"]
 html5lib = ["html5lib"]
 lxml = ["lxml"]
+
+[[package]]
+name = "bizdays"
+version = "1.0.16"
+description = "Functions to handle business days calculations"
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+markers = "python_version == \"3.11\" or python_version >= \"3.12\""
+files = [
+    {file = "bizdays-1.0.16-py3-none-any.whl", hash = "sha256:6ff2caa1b1b3629c803c52d8893340aff4b7f7f7290815cb5f80bec6c7b87e68"},
+    {file = "bizdays-1.0.16.tar.gz", hash = "sha256:16d5a5ccd58f12c54d0c913519e83a4ef9884020a5608003ee0c1825e7ff57c9"},
+]
+
+[package.dependencies]
+pandas = ">=2,<3"
+pandas-market-calendars = ">=4,<5"
 
 [[package]]
 name = "black"
@@ -368,6 +397,21 @@ files = [
 colorama = {version = "*", markers = "platform_system == \"Windows\""}
 
 [[package]]
+name = "clint"
+version = "0.5.1"
+description = "Python Command Line Interface Tools"
+optional = false
+python-versions = "*"
+groups = ["main"]
+markers = "python_version == \"3.11\" or python_version >= \"3.12\""
+files = [
+    {file = "clint-0.5.1.tar.gz", hash = "sha256:05224c32b1075563d0b16d0015faaf9da43aa214e4a2140e51f08789e7a4c5aa"},
+]
+
+[package.dependencies]
+args = "*"
+
+[[package]]
 name = "colorama"
 version = "0.4.6"
 description = "Cross-platform colored terminal text."
@@ -392,6 +436,30 @@ files = [
     {file = "cssselect-1.2.0-py2.py3-none-any.whl", hash = "sha256:da1885f0c10b60c03ed5eccbb6b68d6eff248d91976fcde348f395d54c9fd35e"},
     {file = "cssselect-1.2.0.tar.gz", hash = "sha256:666b19839cfaddb9ce9d36bfe4c969132c647b92fc9088c4e23f786b30f1b3dc"},
 ]
+
+[[package]]
+name = "exchange-calendars"
+version = "4.9"
+description = "Calendars for securities exchanges"
+optional = false
+python-versions = "~=3.10"
+groups = ["main"]
+markers = "python_version == \"3.11\" or python_version >= \"3.12\""
+files = [
+    {file = "exchange_calendars-4.9-py3-none-any.whl", hash = "sha256:291adb2b15be150e83b7c07cef91bfde718c44d8e60cf73d45e0c32a16f7556e"},
+    {file = "exchange_calendars-4.9.tar.gz", hash = "sha256:df4f1be94a028d7d856ba5ccf31c48e8f3bdd52c86ec39361d26b80828f44c60"},
+]
+
+[package.dependencies]
+korean_lunar_calendar = "*"
+numpy = "*"
+pandas = "*"
+pyluach = "*"
+toolz = "*"
+tzdata = "*"
+
+[package.extras]
+dev = ["flake8", "hypothesis", "pip-tools", "pytest", "pytest-benchmark", "pytest-xdist"]
 
 [[package]]
 name = "fake-useragent"
@@ -536,6 +604,19 @@ MarkupSafe = ">=2.0"
 
 [package.extras]
 i18n = ["Babel (>=2.7)"]
+
+[[package]]
+name = "korean-lunar-calendar"
+version = "0.3.1"
+description = "Korean Lunar Calendar"
+optional = false
+python-versions = "*"
+groups = ["main"]
+markers = "python_version == \"3.11\" or python_version >= \"3.12\""
+files = [
+    {file = "korean_lunar_calendar-0.3.1-py3-none-any.whl", hash = "sha256:392757135c492c4f42a604e6038042953c35c6f449dda5f27e3f86a7f9c943e5"},
+    {file = "korean_lunar_calendar-0.3.1.tar.gz", hash = "sha256:eb2c485124a061016926bdea6d89efdf9b9fdbf16db55895b6cf1e5bec17b857"},
+]
 
 [[package]]
 name = "lxml"
@@ -1191,6 +1272,28 @@ test = ["hypothesis (>=6.46.1)", "pytest (>=7.3.2)", "pytest-xdist (>=2.2.0)"]
 xml = ["lxml (>=4.9.2)"]
 
 [[package]]
+name = "pandas-market-calendars"
+version = "4.6.1"
+description = "Market and exchange trading calendars for pandas"
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+markers = "python_version == \"3.11\" or python_version >= \"3.12\""
+files = [
+    {file = "pandas_market_calendars-4.6.1-py3-none-any.whl", hash = "sha256:e3603bea8f1dce556fb21027a3ab73056296a145c5c440be1f5494e6fb34a4f1"},
+    {file = "pandas_market_calendars-4.6.1.tar.gz", hash = "sha256:cc17e3ccb07548603cf8dbd7050c83f8d6ee9ddf3987a05e1dceab53793a0da8"},
+]
+
+[package.dependencies]
+exchange-calendars = ">=3.3"
+pandas = ">=1.1"
+python-dateutil = "*"
+pytz = "*"
+
+[package.extras]
+dev = ["black", "build", "pre-commit", "pytest"]
+
+[[package]]
 name = "parse"
 version = "1.20.2"
 description = "parse() is the opposite of format()"
@@ -1457,6 +1560,23 @@ files = [
 
 [package.extras]
 windows-terminal = ["colorama (>=0.4.6)"]
+
+[[package]]
+name = "pyluach"
+version = "2.2.0"
+description = "A Python package for dealing with Hebrew (Jewish) calendar dates."
+optional = false
+python-versions = ">=3.7"
+groups = ["main"]
+markers = "python_version == \"3.11\" or python_version >= \"3.12\""
+files = [
+    {file = "pyluach-2.2.0-py3-none-any.whl", hash = "sha256:d1eb49d6292087e9290f4661ae01b60c8c933704ec8c9cef82673b349ff96adf"},
+    {file = "pyluach-2.2.0.tar.gz", hash = "sha256:9063a25387cd7624276fd0656508bada08aa8a6f22e8db352844cd858e69012b"},
+]
+
+[package.extras]
+doc = ["sphinx (>=6.1.3,<6.2.0)", "sphinx_rtd_theme (>=1.2.0,<1.3.0)"]
+test = ["beautifulsoup4", "flake8", "pytest", "pytest-cov"]
 
 [[package]]
 name = "pymdown-extensions"
@@ -1993,6 +2113,19 @@ files = [
 ]
 
 [[package]]
+name = "toolz"
+version = "1.0.0"
+description = "List processing tools and functional utilities"
+optional = false
+python-versions = ">=3.8"
+groups = ["main"]
+markers = "python_version == \"3.11\" or python_version >= \"3.12\""
+files = [
+    {file = "toolz-1.0.0-py3-none-any.whl", hash = "sha256:292c8f1c4e7516bf9086f8850935c799a874039c8bcf959d47b600e4c44a6236"},
+    {file = "toolz-1.0.0.tar.gz", hash = "sha256:2c86e3d9a04798ac556793bced838816296a2f085017664e4995cb40a1047a02"},
+]
+
+[[package]]
 name = "tqdm"
 version = "4.67.1"
 description = "Fast, Extensible Progress Meter"
@@ -2275,4 +2408,4 @@ h11 = ">=0.9.0,<1"
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11"
-content-hash = "5cbb531f8f5d4e106624e3f9167d094d81c0ac4bf4a8d135be4f5aaf4084632f"
+content-hash = "3179a40638dc22902d9cb1c9388c820b3522b11533e8f26e90c62efc6ba98f72"

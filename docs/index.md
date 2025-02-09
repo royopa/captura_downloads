@@ -1,6 +1,4 @@
-![alt text](assets/logo_stpstone.png){width="600" .center}
-
-# stpstone
+# captura_downloads
 
 For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 
