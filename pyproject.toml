@@ -24,3 +24,24 @@ mkdocstrings-python = "^1.14.6"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"
+src_paths = [".", "test"]
+honor_noqa = true
+line_length = 79
+
+[tool.pytest.ini_options]
+doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS"
+minversion = "6.2"
+testpaths = ["tests"]
+addopts = [
+    "--import-mode=importlib",
+    "--doctest-modules",
+]
+
+[tool.taskipy.tasks]
+pre_test = "task lint"
+test = "pytest -s -x -vv"
+lint = "blue --check --diff . && isort --check --diff ."
+docs = "mkdocs serve"

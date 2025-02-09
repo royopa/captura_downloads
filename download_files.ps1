@@ -24,6 +24,35 @@ function Replace-DateVariables {
     return $url
 }
 
+# Função para salvar a resposta como arquivo
+function Save-Response {
+    param (
+        [string]$url,
+        [string]$destinationPath,
+        [string]$typeResponse
+    )
+    
+    switch ($typeResponse) {
+        'json' {
+            # Baixar e salvar como JSON
+            Invoke-WebRequest -Uri $url -OutFile $destinationPath
+            Write-Output "Arquivo JSON salvo em '$destinationPath'"
+        }
+        'base64' {
+            # Baixar e salvar como Base64
+            $responseString = Invoke-WebRequest -Uri $url -UseBasicParsing
+            $decodedBytes = [System.Convert]::FromBase64String($responseString.Content)
+            [System.IO.File]::WriteAllBytes($destinationPath, $decodedBytes)
+            Write-Output "Arquivo Base64 salvo em '$destinationPath'"
+        }
+        default {
+            # Baixar e salvar como binário
+            Invoke-WebRequest -Uri $url -OutFile $destinationPath
+            Write-Output "Arquivo binário salvo em '$destinationPath'"
+        }
+    }
+}
+
 # Obtenha a data atual no formato "DD/MM/YYYY", "YYYY-MM-DD" e "YYYYMMDD"
 $dataFormatada = (Get-Date).ToString("dd/MM/yyyy")
 $dataCurta = (Get-Date).ToString("yyyy-MM-dd")
@@ -62,15 +91,14 @@ foreach ($resource in $resources) {
     if ($null -ne $resource.url) {
         # Substitua variáveis de data na URL
         $url = Replace-DateVariables -url $resource.url -dataFormatada $dataFormatada -dataCurta $dataCurta
-        
+
         $nomeArquivo = if ($null -ne $resource.file_name) { "$dataArquivo" + "_" + $resource.file_name } else { "$dataArquivo" + "_" + [System.IO.Path]::GetFileName($url) }
         $caminhoDestino = [System.IO.Path]::Combine($pastaDownloads, $nomeArquivo)
-        
+
         try {
-            # Baixe o arquivo
-            Invoke-WebRequest -Uri $url -OutFile $caminhoDestino
+            # Salve a resposta conforme o tipo
+            Save-Response -url $url -destinationPath $caminhoDestino -typeResponse $resource.type_response
             
-            Write-Output "Arquivo '$nomeArquivo' baixado para '$caminhoDestino'"
         } catch {
             Write-Output "Falha ao baixar '$nomeArquivo' de '$url'."
         }

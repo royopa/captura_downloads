@@ -1,0 +1,21 @@
+site_name: captura_downloads
+repo_url: https://github.com/royopa/captura_downloads
+repo_name: royopa/captura_downloads
+edit_uri: tree/main/docs
+
+theme:
+  name: material
+  language: en
+  palette:
+    primary: 'blue'
+    accent: 'blue'
+  font:
+    text: 'Roboto'
+    code: 'Roboto Mono'
+
+markdown_extensions:
+  - attr_list
+
+extra_css:
+  - stylesheets/extra.css
+
