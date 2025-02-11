@@ -47,11 +47,11 @@ $ ruff format .
 # Running PowerShell Scripts to Download Files
 
 ```sh
-$ powershell ./dependencias.ps1
+$ pwsh ./dependencias.ps1
 ```
 
 ```sh
-$ powershell ./download_files.ps1
+$ pwsh ./download_files.ps1
 ```
 
 
