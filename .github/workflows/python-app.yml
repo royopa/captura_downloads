@@ -13,20 +13,14 @@ permissions:
   contents: read
 
 jobs:
-  build:
-
+  ci-powershell:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python 3.12
       uses: actions/setup-python@v3
       with:
         python-version: "3.12"
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install poetry
     - name: Install dependencies PowerShell
       shell: pwsh
       run: |
@@ -35,7 +29,8 @@ jobs:
       shell: pwsh
       run: |
           pwsh -File .\download_files.ps1
-  ci:
+  
+  ci-python:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -58,3 +53,5 @@ jobs:
         run: poetry install
       - name: Run the automated tests (for example)
         run: poetry run pytest -v
+      - name: Run the automated tests (for example)
+        run: poetry run task test
