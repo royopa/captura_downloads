@@ -55,3 +55,5 @@ jobs:
         run: poetry run pytest -v
       - name: Run the automated tests (for example)
         run: poetry run task test
+      - name: Run the script to download files
+        run: poetry run python ./download_files.py

@@ -1,6 +1,6 @@
 import base64
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 
 import requests
 import yaml
@@ -58,6 +58,14 @@ def save_response(url, destination_path, type_response):
     print(colored.green(f"Arquivo {type_response} salvo em '{destination_path}'"))
 
 
+def get_b3_token(url_token: str):
+    session = requests.Session()
+    response = session.get(url_token, verify=False)
+
+    if response.ok:
+        return response.json()['token']
+
+
 # Função para imprimir informações dos recursos
 def print_resource_info(resource):
     print(f"Nome: {resource['name']}")
@@ -102,6 +110,20 @@ def main():
 
     # Faça o download de cada recurso
     for resource in resources:
+        token_b3 = None
+        if resource.get("url_token"):
+            print(f"Processando recurso: {resource['name']}")
+            print(f"URL Token original: {resource['url_token']}")
+
+            # Substitua variáveis de data na URL
+            url_token = replace_date_variables(
+                resource["url_token"],
+                resource.get("type_date", "data_atual"),
+                calendar_b3,
+            )
+            print(f"URL processada: {url_token}")
+            token_b3 = get_b3_token(url_token)
+
         if resource.get("url"):
             print(f"Processando recurso: {resource['name']}")
             print(f"URL original: {resource['url']}")
@@ -112,6 +134,11 @@ def main():
                 resource.get("type_date", "data_atual"),
                 calendar_b3,
             )
+
+            # Substitua variáveis de token na URL
+            if 'B3_TOKEN' in url:
+                url = url.replace('B3_TOKEN', token_b3)
+            
             print(f"URL processada: {url}")
 
             nome_arquivo = f"{datetime.now().strftime('%Y%m%d')}_{resource.get('file_name', os.path.basename(url))}"
@@ -132,6 +159,8 @@ def main():
                         f"Falha ao baixar o recurso '{resource['name']}' de '{url}'. Erro: {e}"
                     )
                 )
+        
+
 
 
 if __name__ == "__main__":
