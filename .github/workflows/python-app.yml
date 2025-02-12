@@ -33,7 +33,8 @@ jobs:
           pwsh -File .\dependencias.ps1
     - name: Test with pytest
       run: |
-        poetry run task test
+          poetry env activate
+          poetry run task test
     - name: Execute PowerShell script
       shell: pwsh
       run: |
