@@ -56,6 +56,10 @@ resources:
     url: 'https://sistemaswebb3-derivativos.b3.com.br/financialIndicatorsProxy/ReferenceExchangeRate/GetReferenceExchangeRate/eyJsYW5ndWFnZSI6InB0LWJyIn0='
     file_name: 'b3_taxa_cambio_referencia.json'
     type_response: json
+  - name: B3 - Capital Social Empresas
+    url: 'https://sistemaswebb3-listados.b3.com.br/shareCapitalProxy/ShareCapitalCall/GetList/eyJuYW1lIjoiIiwicGFnZU51bWJlciI6MSwicGFnZVNpemUiOjEyMH0='
+    file_name: 'b3_capital_social_empresas.json'
+    type_response: json
   #- name: B3 - Carteira Teórica - IBOV
   #  url: 'https://sistemaswebb3-listados.b3.com.br/indexProxy/indexCall/GetPortfolioDay/eyJsYW5ndWFnZSI6InB0LWJyIiwicGFnZU51bWJlciI6MSwicGFnZVNpemUiOjEyMCwiaW5kZXgiOiJJQk9WIiwic2VnbWVudCI6IjEifQ=='
   #  file_name: 'b3_carteira_teorica_ibov.json'
