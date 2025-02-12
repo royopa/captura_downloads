@@ -1,5 +1,21 @@
-# Created by https://www.toptal.com/developers/gitignore/api/python
-# Edit at https://www.toptal.com/developers/gitignore?templates=python
+# Created by https://www.toptal.com/developers/gitignore/api/python,dotnetcore,powershell
+# Edit at https://www.toptal.com/developers/gitignore?templates=python,dotnetcore,powershell
+
+### DotnetCore ###
+# .NET Core build folders
+bin/
+obj/
+
+# Common node modules locations
+/node_modules
+/wwwroot/node_modules
+
+### PowerShell ###
+# Exclude packaged modules
+*.zip
+
+# Exclude .NET assemblies from source
+*.dll
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
@@ -16,7 +32,6 @@ build/
 develop-eggs/
 dist/
 downloads/
-downloads_bulk/
 eggs/
 .eggs/
 lib/
@@ -174,7 +189,7 @@ poetry.toml
 # LSP config files
 pyrightconfig.json
 
-# End of https://www.toptal.com/developers/gitignore/api/python
+# End of https://www.toptal.com/developers/gitignore/api/python,dotnetcore,powershell
 
 # Generated using ignr.py - github.com/Antrikshy/ignr.py
 
