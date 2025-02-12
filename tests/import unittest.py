@@ -1,6 +1,7 @@
-import unittest
-from unittest.mock import patch, mock_open, MagicMock
 import os
+import unittest
+from unittest.mock import MagicMock, mock_open, patch
+
 from download_files import save_response
 
 

@@ -1,5 +1,6 @@
-from bizdays import Calendar
 import unittest
+
+from bizdays import Calendar
 
 
 def test_new_holiday_brazil():

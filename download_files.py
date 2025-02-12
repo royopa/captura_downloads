@@ -1,10 +1,11 @@
+import base64
+import os
+from datetime import datetime, timedelta
+
+import requests
+import yaml
 from bizdays import Calendar
 from clint.textui import colored
-import os
-import requests
-import base64
-import yaml
-from datetime import datetime, timedelta
 
 
 # Função para ler o conteúdo do YAML
@@ -107,7 +108,9 @@ def main():
 
             # Substitua variáveis de data na URL
             url = replace_date_variables(
-                resource["url"], resource.get("type_date", "data_atual"), calendar_b3
+                resource["url"],
+                resource.get("type_date", "data_atual"),
+                calendar_b3,
             )
             print(f"URL processada: {url}")
 

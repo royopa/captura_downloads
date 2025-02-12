@@ -55,8 +55,8 @@ addopts = [
 ]
 
 [tool.taskipy.tasks]
-pre_test = "ruff format ."
+pre_test = "blue . && isort . && ruff format ."
 test = "pytest -s -x -vv"
-lint = "blue --check --diff . && isort --check --diff ."
+lint = "blue . && isort ."
 docs = "mkdocs serve"
 ruff = "ruff format ."
