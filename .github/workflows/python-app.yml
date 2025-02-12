@@ -15,7 +15,7 @@ permissions:
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
@@ -27,11 +27,15 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install poetry
-    - name: Lint with flake8
+    - name: Install dependencies PowerShell
+      shell: pwsh
       run: |
-        poetry env activate
-        task lint
+          pwsh -File .\dependencias.ps1
     - name: Test with pytest
       run: |
-        poetry env activate  
-        task test
+        poetry run task test
+    - name: Execute PowerShell script
+      shell: pwsh
+      run: |
+          pwsh -File .\download_files.ps1
+
