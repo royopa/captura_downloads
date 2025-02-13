@@ -57,3 +57,20 @@ jobs:
         run: poetry run task test
       - name: Run the script to download files
         run: poetry run python ./download_files.py
+
+  dotnet8:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 8.0.112
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build
+      - name: Test
+        run: dotnet test
+      - name: Run
+        run: dotnet run

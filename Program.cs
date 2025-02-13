@@ -1,8 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
 Console.WriteLine("Hello, World!");
 
-int firstValue = 500;
-int secondValue = 600;
-int largerValue = System.Math.Max(firstValue, secondValue);
+Console.WriteLine("Signed integral types:");
 
-Console.WriteLine(largerValue);
+Console.WriteLine($"sbyte  : {sbyte.MinValue} to {sbyte.MaxValue}");
+Console.WriteLine($"short  : {short.MinValue} to {short.MaxValue}");
+Console.WriteLine($"int    : {int.MinValue} to {int.MaxValue}");
+Console.WriteLine($"long   : {long.MinValue} to {long.MaxValue}");
