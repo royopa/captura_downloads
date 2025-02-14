@@ -1,7 +1,8 @@
 {
-    "python.testing.pytestArgs": [
-        "tests"
-    ],
-    "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true
+    "explorer.confirmDelete": true,
+    "editor.minimap.enabled": false,
+    "workbench.editor.showTabs": "single",
+    "editor.rulers": [
+        80,120
+    ]
 }

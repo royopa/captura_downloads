@@ -2051,6 +2051,28 @@ files = [
 ]
 
 [[package]]
+name = "splinter"
+version = "0.21.0"
+description = "browser abstraction for web acceptance testing"
+optional = false
+python-versions = "*"
+groups = ["main"]
+markers = "python_version == \"3.11\" or python_version >= \"3.12\""
+files = [
+    {file = "splinter-0.21.0-py3-none-any.whl", hash = "sha256:4c9e5962ce25f468b2dd52effbd1445afd7466740f238e564c6b70f7fda9368f"},
+    {file = "splinter-0.21.0.tar.gz", hash = "sha256:60cbbec9209acefccf39608d677eecdb248bbd700023663ce406595322c38fe5"},
+]
+
+[package.dependencies]
+urllib3 = ">=1.26.14,<3.0"
+
+[package.extras]
+django = ["Django (>=2.0.6)", "cssselect", "lxml (>=4.2.4)"]
+flask = ["Flask (>=2.3.2)", "cssselect", "lxml (>=4.2.4)"]
+selenium = ["selenium (>=4.1.0,<4.17.0)"]
+zope-testbrowser = ["cssselect", "lxml (>=4.2.4)", "zope.testbrowser (>=6.0)"]
+
+[[package]]
 name = "taskipy"
 version = "1.14.1"
 description = "tasks runner for python projects"
@@ -2408,4 +2430,4 @@ h11 = ">=0.9.0,<1"
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11"
-content-hash = "3179a40638dc22902d9cb1c9388c820b3522b11533e8f26e90c62efc6ba98f72"
+content-hash = "bfdfdd2819a59d98cf235587c3351b246bf5891eff6f4f3e2d842a8135385849"
