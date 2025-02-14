@@ -60,3 +60,10 @@ $ pwsh ./download_files.ps1
 ```sh
 $ python ./download_files.py
 ```
+
+
+# Running all downloads
+
+```sh
+$ task start
+```
