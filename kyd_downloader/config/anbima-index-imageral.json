@@ -1,0 +1,9 @@
+{
+    "url": "https://adata-precos-prod.s3.amazonaws.com/arquivos/indices-historico/IMAGERAL-HISTORICO.xls",
+    "name": "anbima-index-imageral",
+    "output_bucket": "ks-rawdata-anbima",
+    "prefix": "IMAGERAL",
+    "ext": "xls",
+    "fname_format": "IMAGERAL-HISTORICO",
+    "verify_ssl": false
+}

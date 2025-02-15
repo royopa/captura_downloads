@@ -1,0 +1,9 @@
+{
+    "url": "https://cdn.tesouro.gov.br/sistemas-internos/apex/producao/sistemas/sistd/%Y/NTN-C_%Y.xls",
+    "name": "td_ntnc",
+    "type": "datetime",
+    "output_bucket": "ks-rawdata-td",
+    "prefix": "NTN-C",
+    "use_filename": true,
+    "verify_ssl": false
+}

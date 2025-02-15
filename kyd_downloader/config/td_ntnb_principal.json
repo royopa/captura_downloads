@@ -1,0 +1,9 @@
+{
+    "url": "https://cdn.tesouro.gov.br/sistemas-internos/apex/producao/sistemas/sistd/%Y/NTN-B_Principal_%Y.xls",
+    "name": "td_ntnb_principal",
+    "type": "datetime",
+    "output_bucket": "ks-rawdata-td",
+    "prefix": "NTN-B-Principal",
+    "use_filename": true,
+    "verify_ssl": false
+}

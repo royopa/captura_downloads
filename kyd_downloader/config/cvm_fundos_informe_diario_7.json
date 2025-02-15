@@ -1,0 +1,10 @@
+{
+    "url": "http://dados.cvm.gov.br/dados/FI/DOC/INF_DIARIO/DADOS/inf_diario_fi_%Y%m.zip",
+    "name": "cvm_fundos_informe_diario_7",
+    "type": "fundos_inf_diario",
+    "timedelta": -1,
+    "month_reference": -7,
+    "output_bucket": "ks-rawdata-cvm",
+    "prefix": "fundos/inf_diario_fi",
+    "ext": "csv"
+}

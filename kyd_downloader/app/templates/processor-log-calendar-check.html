@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block form %}
+{% endblock %}
+
+{% block content %}
+<table id="data" class="table table-hover table-sm">
+    <thead>
+        <tr>
+            <th>Processor Name</th>
+            <th>Count</th>
+            <th>Missing Dates</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for rep in report %}
+        <tr>
+            <td>{{ rep.name }}</td>
+            <td>{{ rep.count }}</td>
+            <td>{{ rep.missing_dates }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+{% block datatable %}
+{% endblock %}

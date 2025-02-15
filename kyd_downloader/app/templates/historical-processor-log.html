@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block form %}
+<form method="GET" action="/historical-processor-log">
+    <label for="processor_name">Processor:</label>&nbsp;
+    <select name="processor_name" id="processor_name">
+        {% for name in processor_names %}
+        <option value="{{name}}" {{ "selected" if name==processor_name else '' }}>{{name}}</option>
+        {% endfor %}
+    </select>
+    &nbsp;&nbsp;&nbsp;
+
+    <input type="submit" value="Send">
+</form>
+{% endblock %}
+
+{% block content %}
+<div>Total: {{length}}</div>
+<table id="data" class="table table-hover table-sm">
+    <thead>
+        <tr>
+            <th>Time</th>
+            <th>Refdate</th>
+            <th>Rows</th>
+            <th>Columns</th>
+            <th>Filename</th>
+            <th>Message</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in logs %}
+        <tr>
+            <td class="col-md-2">{{ log.time }}</td>
+            <td>{{ log.file_refdate }}</td>
+            <td class="col-md-1">{{ log.data_rows }}</td>
+            <td class="col-md-1">{{ log.data_columns }}</td>
+            <td class="col-md-3">{{ log.output_fname }}</td>
+            <td class="col-md-2">{{ log.error }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+{% block datatable %}
+<script>
+    $(document).ready(function () {
+        $('#data').DataTable({
+            "lengthMenu": [[-1, 10, 25, 50], ["All", 10, 25, 50]],
+            "ordering": true,
+            "order": [],
+            "createdRow": function (row, data, dataIndex) {
+                if (data[5] != "" && data[5] != "Processor not found") {
+                    $(row).addClass("table-danger");
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

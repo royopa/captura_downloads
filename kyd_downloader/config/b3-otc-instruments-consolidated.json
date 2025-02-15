@@ -1,0 +1,16 @@
+{
+    "name": "b3-otc-instruments-consolidated",
+    "type": "b3files",
+    "download_weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+    ],
+    "offset": -1,
+    "output_bucket": "ks-rawdata-b3",
+    "prefix": "OTCInstrumentsConsolidated",
+    "filename": "Cadastro_Instrumentos_Balcao",
+    "ext": "csv"
+}

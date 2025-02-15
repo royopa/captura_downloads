@@ -1,0 +1,9 @@
+{
+    "url": "https://adata-precos-prod.s3.amazonaws.com/arquivos/indices-historico/IRFMP2-HISTORICO.xls",
+    "name": "anbima-index-irfmp2",
+    "output_bucket": "ks-rawdata-anbima",
+    "prefix": "IRFMP2",
+    "ext": "xls",
+    "fname_format": "IRFMP2-HISTORICO",
+    "verify_ssl": false
+}

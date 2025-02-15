@@ -1,0 +1,9 @@
+{
+    "url": "https://cdn.tesouro.gov.br/sistemas-internos/apex/producao/sistemas/sistd/%Y/NTN-F_%Y.xls",
+    "name": "td_ntnf",
+    "type": "datetime",
+    "output_bucket": "ks-rawdata-td",
+    "prefix": "NTN-F",
+    "use_filename": true,
+    "verify_ssl": false
+}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<table id="data" class="table table-hover table-sm">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Download Time</th>
+            <th>Refdate</th>
+            <th>Download Status</th>
+            <th>Status</th>
+            <th>Filename</th>
+            <th>Message</th>
+            <th>URL</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in logs %}
+        <tr>
+            <td style="width: 8%;" class="col-md-2">{{ log.name }}</td>
+            <td style="width: 4%;" class="col-md-2">{{ log.time }}</td>
+            <td style="width: 2%;">{{ log.refdate }}</td>
+            <td style="width: 2%;">{{ log.download_status }}</td>
+            <td style="width: 2%;">{{ log.status }}</td>
+            <td style="width: 15%;" class="col-md-3">{{ log.filename }}</td>
+            <td class="col-md-2">{{ log.message }}</td>
+            <td style="width: 2%;" class="col-md-1"><a href="{{ log.url }}">Link</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+{% block datatable %}
+<script>
+    $(document).ready(function () {
+        $('#data').DataTable({
+            "lengthMenu": [[-1, 10, 50], ["All", 10, 50]],
+            "ordering": true,
+            "order": [],
+            "createdRow": function (row, data, dataIndex) {
+                if (data[4] == -1) {
+                    $(row).addClass("table-info");
+                } else if (data[4] > 0) {
+                    $(row).addClass("table-danger");
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

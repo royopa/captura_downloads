@@ -16,7 +16,7 @@ resources:
     url: https://www.anbima.com.br/informacoes/merc-sec-debentures/arqs/dbYYMMDD.txt
     file_name: 'anbima_mercado_secundario_debentures.txt'
     type_response: txt
-    type_date: dia_anterior    
+    type_date: dia_anterior
   - name: ANBIMA - Indicadores Financeiros
     url: https://www.anbima.com.br/informacoes/indicadores/arqs/indicadores.xls
     file_name: anbima_indicadores.xls
@@ -41,8 +41,10 @@ resources:
     url: https://sistemaswebb3-listados.b3.com.br/fundsProxy/fundsCall/GetListFundDownload/eyJ0eXBlRnVuZCI6MjAsInBhZ2VOdW1iZXIiOjEsInBhZ2VTaXplIjo2MH0=
     file_name: b3_etfs_listados.csv.base64
     type_response: base64
+    type_date: dia_anterior
   - name: B3 - Instrumentos Listados
     url_token: https://arquivos.b3.com.br/api/download/requestname?fileName=InstrumentsConsolidatedFile&date=YYYY-MM-DD&recaptchaToken=
     url: https://arquivos.b3.com.br/api/download/?token=B3_TOKEN
     file_name: b3_instrumentos_listados.csv
     type_response: csv
+    type_date: dia_anterior

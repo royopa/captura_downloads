@@ -1,0 +1,9 @@
+{
+    "url": "https://adata-precos-prod.s3.amazonaws.com/arquivos/indices-historico/IMAB5MAIS-HISTORICO.xls",
+    "name": "anbima-index-imab5mais",
+    "output_bucket": "ks-rawdata-anbima",
+    "prefix": "IMAB5+",
+    "ext": "xls",
+    "fname_format": "IMAB5MAIS-HISTORICO",
+    "verify_ssl": false
+}

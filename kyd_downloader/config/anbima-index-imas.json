@@ -1,0 +1,9 @@
+{
+    "url": "https://adata-precos-prod.s3.amazonaws.com/arquivos/indices-historico/IMAS-HISTORICO.xls",
+    "name": "anbima-index-imas",
+    "output_bucket": "ks-rawdata-anbima",
+    "prefix": "IMAS",
+    "ext": "xls",
+    "fname_format": "IMAS-HISTORICO",
+    "verify_ssl": false
+}

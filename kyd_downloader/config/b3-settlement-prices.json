@@ -1,0 +1,10 @@
+{
+    "url": "https://www2.bmf.com.br/pages/portal/bmfbovespa/lumis/lum-ajustes-do-pregao-ptBR.asp?dData1=%d/%m/%Y",
+    "name": "b3-settlement-prices",
+    "type": "datetime",
+    "download_weekdays": [0,1,2,3,4],
+    "output_bucket": "ks-rawdata-b3",
+    "prefix": "SettlementPrices",
+    "verify_ssl": false,
+    "ext": "html"
+}

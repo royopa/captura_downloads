@@ -1,5 +1,5 @@
 {
-    "explorer.confirmDelete": true,
+    "explorer.confirmDelete": false,
     "editor.minimap.enabled": false,
     "workbench.editor.showTabs": "single",
     "editor.rulers": [

@@ -1,0 +1,11 @@
+{
+    "url": "https://www.b3.com.br/json/%Y%m%d/Posicoes/Empresa/SI_C_OPCPOSABEMP.json",
+    "name": "b3-companies-options",
+    "type": "datetime",
+    "timedelta": -1,
+    "download_weekdays": [1,2,3,4,5],
+    "output_bucket": "ks-rawdata-b3",
+    "prefix": "CompaniesOptions",
+    "ext": ".json",
+    "verify_ssl": false
+}

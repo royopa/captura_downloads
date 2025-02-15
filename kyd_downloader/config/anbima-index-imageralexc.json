@@ -1,0 +1,9 @@
+{
+    "url": "https://adata-precos-prod.s3.amazonaws.com/arquivos/indices-historico/IMAGERALEXC-HISTORICO.xls",
+    "name": "anbima-index-imageralexc",
+    "output_bucket": "ks-rawdata-anbima",
+    "prefix": "IMAGERALEXC",
+    "ext": "xls",
+    "fname_format": "IMAGERALEXC-HISTORICO",
+    "verify_ssl": false
+}

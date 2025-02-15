@@ -1,0 +1,9 @@
+{
+    "url": "https://cdn.tesouro.gov.br/sistemas-internos/apex/producao/sistemas/sistd/%Y/LFT_%Y.xls",
+    "name": "td_lft",
+    "type": "datetime",
+    "output_bucket": "ks-rawdata-td",
+    "use_filename": true,
+    "prefix": "LFT",
+    "verify_ssl": false
+}

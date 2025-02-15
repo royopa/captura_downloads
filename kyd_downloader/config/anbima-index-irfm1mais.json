@@ -1,0 +1,9 @@
+{
+    "url": "https://adata-precos-prod.s3.amazonaws.com/arquivos/indices-historico/IRFM1MAIS-HISTORICO.xls",
+    "name": "anbima-index-irfm1mais",
+    "output_bucket": "ks-rawdata-anbima",
+    "prefix": "IRFM1MAIS",
+    "ext": "xls",
+    "fname_format": "IRFM1MAIS-HISTORICO",
+    "verify_ssl": false
+}

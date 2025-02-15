@@ -1,0 +1,21 @@
+{% extends "download-log-table.html" %}
+
+{% block form %}
+<form method="GET" action="/download-log">
+  <label for="start">Date:</label>
+  <input type="date" id="start" name="date" value="{{date.strftime('%Y-%m-%d')}}">
+  &nbsp;&nbsp;&nbsp;
+  <label for="start">Status:</label>
+  &nbsp;
+  <input type="checkbox" name="status" id="status-1" value="-1" {{ "checked" if -1 in status else '' }}>&nbsp;
+  <label for="status-1">-1</label>&nbsp;
+  <input type="checkbox" name="status" id="status0" value="0" {{ 'checked' if 0 in status else '' }}>&nbsp;<label
+    for="status0">0</label>&nbsp;
+  <input type="checkbox" name="status" id="status1" value="1" {{ 'checked' if 1 in status else '' }}>&nbsp;<label
+    for="status1">1</label>&nbsp;
+  <input type="checkbox" name="status" id="status2" value="2" {{ 'checked' if 2 in status else '' }}>&nbsp;<label
+    for="status2">2</label>&nbsp;
+  &nbsp;&nbsp;&nbsp;
+  <input type="submit" value="Send">
+</form>
+{% endblock %}

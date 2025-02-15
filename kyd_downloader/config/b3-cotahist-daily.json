@@ -1,0 +1,16 @@
+{
+    "url": "https://bvmf.bmfbovespa.com.br/InstDados/SerHist/COTAHIST_D%d%m%Y.ZIP",
+    "name": "b3-cotahist-daily",
+    "download_weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+    ],
+    "type": "datetime",
+    "output_bucket": "ks-rawdata-b3",
+    "prefix": "COTAHIST_DAILY",
+    "use_filename": true,
+    "verify_ssl": false
+}

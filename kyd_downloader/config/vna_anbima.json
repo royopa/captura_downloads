@@ -1,0 +1,7 @@
+{
+    "name": "vna_anbima",
+    "type": "anbima-vna",
+    "download_weekdays": [0,1,2,3,4],
+    "offset": 0,
+    "output_bucket": "ks-rawdata-anbima-vnatitpub"
+}
