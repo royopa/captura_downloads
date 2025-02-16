@@ -3,9 +3,9 @@ import logging
 from datetime import date, datetime, timedelta
 
 from google.cloud import storage
-from main import save_file_to_output_bucket
 
 from kyd.data.downloaders import download_by_config
+from main import save_file_to_output_bucket
 
 # import bizdays
 

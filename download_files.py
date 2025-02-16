@@ -1,6 +1,7 @@
 import base64
+import logging
 import os
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 
 import requests
 import yaml
@@ -80,6 +81,7 @@ def print_resource_info(resource):
 
 
 def main():
+    logging.basicConfig(level=logging.INFO)
     calendar_b3 = Calendar.load('B3')
     print(calendar_b3)
     print('Hello from captura-downloads!')
