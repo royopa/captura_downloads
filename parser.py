@@ -5,7 +5,6 @@ from pathlib import Path
 import fire
 from dotenv import load_dotenv
 
-# Carregar variáveis de ambiente do arquivo .env
 load_dotenv()
 
 
@@ -71,32 +70,40 @@ def parser_anbima(file_path):
 
 
 def load_ima_totais(file_path):
+    file_path = file_path.replace('.txt', '.csv')
+    file_name = Path(file_path).name    
+    schema = file_name.split('_')[1]
+    table_name = file_name.split('_anbima_')[1].replace('.csv', '')
     server = os.getenv('DB_SERVER')
     database = os.getenv('DB_DATABASE')
     user = os.getenv('DB_USER')
     password = os.getenv('DB_PASSWORD')
 
-    # Define o comando bcp para importar para a tabela IndicadoresLayout1
-    command = f'bcp {database}.dbo.IndicadoresLayout1 in "{file_path}" -c -t"@" -r"\\n" -F 2 -S {server} -U {user} -P {password}'
+    full_table_name = f'{database}.{schema}.{table_name}'
+    command = f'bcp {full_table_name} in "{file_path}" -C 65001 -c -t";" -r"\\n" -F 2 -S {server} -U {user} -P {password}'
     print(command)
 
     # Executa o comando bcp
-    print('Importando dados para a tabela IndicadoresLayout1...')
+    print(f'Importando dados para a tabela {table_name}...')
     os.system(command)
 
 
 def load_ima_composicao_carteira(file_path):
+    file_path = file_path.replace('.txt', '.csv')
+    file_name = Path(file_path).name
+    schema = file_name.split('_')[1]
+    table_name = file_name.split('_anbima_')[1].replace('.csv', '')
     server = os.getenv('DB_SERVER')
     database = os.getenv('DB_DATABASE')
     user = os.getenv('DB_USER')
     password = os.getenv('DB_PASSWORD')
     
-    # Define o comando bcp para importar para a tabela IndicadoresLayout1
-    command = f'bcp {database}.dbo.IndicadoresLayout1 in "{file_path}" -c -t"@" -r"\\n" -F 2 -S {server} -U {user} -P {password}'
+    full_table_name = f'{database}.{schema}.{table_name}'
+    command = f'bcp {full_table_name} in "{file_path}" -C 65001 -c -t";" -r"\\n" -F 2 -S {server} -U {user} -P {password}'
     print(command)
 
     # Executa o comando bcp
-    print('Importando dados para a tabela IndicadoresLayout1...')
+    print(f'Importando dados para a tabela {table_name}...')
     os.system(command)
 
 

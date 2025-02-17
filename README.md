@@ -87,5 +87,5 @@ sudo npm install -g sql-cli
 ```
 
 ```sh
-mssql -u sa -p DB_Password
+mssql -u sa -p d
 ```

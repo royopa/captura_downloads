@@ -1,4 +1,8 @@
 -- Tabela para os registros que começam com 1
+CREATE SCHEMA IF NOT EXISTS anbima;
+CREATE SCHEMA IF NOT EXISTS b3;
+CREATE SCHEMA IF NOT EXISTS bacen;
+
 DROP TABLE IF EXISTS dbo.IndicadoresLayout1;
 CREATE TABLE dbo.IndicadoresLayout1 (
     Id INT,
