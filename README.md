@@ -67,3 +67,25 @@ $ python ./download_files.py
 ```sh
 $ task start
 ```
+
+
+# Installing SQL Server via Docker
+
+https://appsmith.hashnode.dev/running-mssql-server-in-your-mac-m1m2m3-using-docker
+
+```sh
+sudo docker pull mcr.microsoft.com/azure-sql-edge
+
+```
+
+```sh
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=DB_Password" -e "MSSQL_PID=Developer" -e "MSSQL_USER=SA" -p 1433:1433 -d --name=sql mcr.microsoft.com/azure-sql-edge
+```
+
+```sh
+sudo npm install -g sql-cli
+```
+
+```sh
+mssql -u sa -p DB_Password
+```
