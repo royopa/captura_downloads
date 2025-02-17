@@ -27,5 +27,13 @@ def powershell():
     subprocess.run(['pwsh', '-File', './download_files.ps1'], check=True)
 
 
+def all():
+    print('download_all')
+    kyd()
+    legacy()
+    selenium()
+    powershell()
+
+
 if __name__ == '__main__':
     fire.Fire()
