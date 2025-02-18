@@ -2,6 +2,7 @@ import os
 from datetime import datetime
 from pathlib import Path
 
+import json
 import bizdays
 import pandas as pd
 from dotenv import load_dotenv
@@ -20,9 +21,7 @@ def main():
     data_atual = datetime.now()
     data_arquivo = data_atual.strftime('%Y%m%d')
     project_root_folder = Path(__file__).resolve().parents[3]
-    file_name = (
-        f'{data_arquivo}_anbima_mercado_secundario_titulos_publicos.txt'
-    )
+    file_name = f'{data_arquivo}_b3_capital_social_empresas.json'
     file_path = os.path.join(project_root_folder, 'downloads_bulk', file_name)
 
     if not os.path.exists(file_path):
@@ -48,11 +47,11 @@ def extract(file_path):
     file_name = Path(file_path).name
     print(f'Processing file {file_name} in folder {folder_path}')
 
-    file_name_out = file_name.replace('.txt', '_utf8.txt')
+    file_name_out = file_name.replace('.json', '_utf8.json')
     layout_path = os.path.join(folder_path, file_name_out)
 
     with open(layout_path, 'w', encoding='utf-8') as layout_file:
-        with open(file_path, 'r', encoding='latin1') as file:
+        with open(file_path, 'r', encoding='utf-8') as file:
             for line in file:
                 layout_file.write(line)
 
@@ -66,43 +65,48 @@ def transform(file_path):
     cal = bizdays.Calendar.load('ANBIMA')
     data_referencia = cal.offset(data_atual, -1)
 
-    df = pd.read_csv(
-        file_path,
-        sep='@',
-        encoding='utf-8',
-        decimal=',',
-        thousands='.',
-        skiprows=2,
-    )
+    # Ler o conteúdo do arquivo JSON
+    with open(file_path, 'r', encoding='utf-8') as file:
+        json_data = file.read()
+    
+    # Carregar o JSON em um dicionário Python
+    data = json.loads(json_data)
+    df = pd.DataFrame(data.get('results'))
+
+    df.insert(0, 'DT_REF', data_referencia)
 
     a_renomear = {
-        'Titulo': 'NO_TITULO',
-        'Data Referencia': 'DT_REF',
-        'Codigo SELIC': 'CO_SELIC',
-        'Data Base/Emissao': 'DT_BASE_EMISSAO',
-        'Data Vencimento': 'DT_VENCTO',
-        'Tx. Compra': 'VR_TAXA_COMPRA',
-        'Tx. Venda': 'VR_TAXA_VENDA',
-        'Tx. Indicativas': 'VR_TAXA_INDICATIVA',
-        'PU': 'VR_PU',
-        'Desvio padrao': 'VR_DESVIO_PADRAO',
-        'Interv. Ind. Inf. (D0)': 'VR_INTERVALO_INDICATIVO_MIN_D0',
-        'Interv. Ind. Sup. (D0)': 'VR_INTERVALO_INDICATIVO_MAX_D0',
-        'Interv. Ind. Inf. (D+1)': 'VR_INTERVALO_INDICATIVO_MIN_D1',
-        'Interv. Ind. Sup. (D+1)': 'VR_INTERVALO_INDICATIVO_MAX_D1',
-        'Criterio': 'NO_CRITERIO',
+        'tradingName': 'NO_TRADING_NAME',
+        'issuingCompany': 'NO_ISSUING_COMPANY',
+        'companyName': 'NO_COMPANY',
+        'market': 'NO_MARKET',
+        'typeCapital': 'NO_TYPE_CAPITAL',
+        'value': 'VR_CAPITAL',
+        'approvedDate': 'DT_APPROVED',
+        'commonShares': 'NU_COMMON_SHARES',
+        'preferredShares': 'NU_PREFERRED_SHARES',
+        'totalQtyShares': 'NU_TOTAL_QTY_SHARES',
     }
 
     df = df.rename(columns=a_renomear)
 
-    df['DT_REF'] = pd.to_datetime(df['DT_REF'], format='%Y%m%d')
-    df['DT_VENCTO'] = pd.to_datetime(df['DT_VENCTO'], format='%Y%m%d')
+    df['DT_REF'] = pd.to_datetime(df['DT_REF'])
+    df['DT_APPROVED'] = pd.to_datetime(df['DT_APPROVED'], format='%d/%m/%Y')
+
+    for column_name in df.columns:
+        if column_name.startswith('NU_') or column_name.startswith('VR_'):
+            df[column_name] = df[column_name].str.replace('.', '')
+            df[column_name] = df[column_name].str.replace(',', '.')
+            df[column_name] = pd.to_numeric(df[column_name], errors='coerce')
 
     df = convert_columns_dtypes(df)
 
     file_name = Path(file_path).name
     schema = file_name.split('_')[1]
-    table_name = file_name.split('_anbima_')[1].split('.')[0]
+    table_name = file_name.split('_b3_')[1].split('.')[0]
+    table_name = table_name.replace('_utf8', '')
+    table_name = table_name.replace('.csv', '')
+    table_name = table_name.replace('.json', '')
 
     print('Creating table no database...', end=' ')
     df.head(0).to_sql(
@@ -117,6 +121,7 @@ def transform(file_path):
 
     print('Reformatting csv file to bcp import...', end=' ')
     file_path_out = file_path.replace('.txt', '.csv')
+    file_path_out = file_path.replace('.json', '.csv')
     df.to_csv(
         file_path_out,
         sep=';',

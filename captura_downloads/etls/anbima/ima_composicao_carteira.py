@@ -5,7 +5,12 @@ from pathlib import Path
 import pandas as pd
 from dotenv import load_dotenv
 
-from .utils import convert_columns_dtypes, get_engine, get_sqlalchemy_dtypes, load_with_bcp
+from .utils import (
+    convert_columns_dtypes,
+    get_engine,
+    get_sqlalchemy_dtypes,
+    load_with_bcp,
+)
 
 load_dotenv()
 

@@ -31,7 +31,7 @@ def all():
     print('download_all')
     kyd()
     legacy()
-    #selenium()
+    # selenium()
     powershell()
 
 
