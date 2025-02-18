@@ -5,7 +5,7 @@ from pathlib import Path
 import pandas as pd
 from dotenv import load_dotenv
 
-from .utils import convert_columns_dtypes, get_engine, get_sqlalchemy_dtypes
+from .utils import convert_columns_dtypes, get_engine, get_sqlalchemy_dtypes, load_with_bcp
 
 load_dotenv()
 
@@ -130,20 +130,7 @@ def transform(file_path):
 
 
 def load(file_path):
-    file_name = Path(file_path).name
-    schema = file_name.split('_')[1]
-    table_name = file_name.split('_anbima_')[1].replace('.csv', '')
-    server = os.getenv('DB_SERVER')
-    database = os.getenv('DB_DATABASE')
-    user = os.getenv('DB_USER')
-    password = os.getenv('DB_PASSWORD')
-
-    full_table_name = f'{database}.{schema}.{table_name}'
-    command = f'bcp {full_table_name} in "{file_path}" -C 65001 -c -t";" -r"\\n" -F 2 -S {server} -U {user} -P {password}'
-    print(command)
-
-    print(f'Importing data to table {full_table_name}...')
-    os.system(command)
+    return load_with_bcp(file_path)
 
 
 if __name__ == '__main__':

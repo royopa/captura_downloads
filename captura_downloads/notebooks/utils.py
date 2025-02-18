@@ -1,7 +1,9 @@
 import os
 
+import pandas as pd
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
+from sqlalchemy.types import Date, DateTime, Float, Integer, String
 
 
 def get_engine():
@@ -19,3 +21,41 @@ def get_engine():
 
     # Criar e retornar a engine
     return create_engine(database_url)
+
+
+def convert_columns_dtypes(df):
+    for column_name in df.columns:
+        if column_name.startswith('PC_') or column_name.startswith('VR_'):
+            df[column_name] = pd.to_numeric(df[column_name], errors='coerce')
+        if column_name.startswith('NU_'):
+            df[column_name] = pd.to_numeric(df[column_name], errors='coerce')
+        if column_name.startswith('DT_'):
+            df[column_name] = pd.to_datetime(df[column_name], errors='coerce')
+    return df
+
+
+def get_sqlalchemy_dtypes(df):
+    dtype_mapping = {
+        'int64': Integer,
+        'float64': Float,
+        'object': String,
+        'datetime64[ns]': DateTime,
+    }
+
+    column_dtypes = {}
+    for column_name in df.columns:
+        dtype = str(df[column_name].dtype)
+        sqlalchemy_dtype = dtype_mapping.get(dtype, String)
+
+        if column_name.startswith('PC_'):
+            sqlalchemy_dtype = Float
+        if column_name.startswith('VR_'):
+            sqlalchemy_dtype = Float
+        if column_name.startswith('NU_'):
+            sqlalchemy_dtype = Float
+        if column_name.startswith('DT_'):
+            sqlalchemy_dtype = Date
+
+        column_dtypes[column_name] = sqlalchemy_dtype
+
+    return column_dtypes

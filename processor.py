@@ -1,11 +1,9 @@
 import os
 from datetime import datetime
-from pathlib import Path
 
-import fire
 from dotenv import load_dotenv
 
-from captura_downloads.etls.anbima import ima_composicao_carteira, ima_totais
+from captura_downloads.etls.anbima import ima_composicao_carteira, ima_totais, mercado_secundario_debentures, mercado_secundario_titulos_publicos
 
 load_dotenv()
 
@@ -22,12 +20,13 @@ def main():
 
         if processor_name == 'anbima':
             print(f'Processor {processor_name} is running')
-            if (
-                f'{data_referencia.strftime("%Y%m%d")}_anbima_ima_completo'
-                in file_name
-            ):
+            if '_anbima_ima_completo.txt' in file_name:
                 ima_composicao_carteira.main()
                 ima_totais.main()
+            if '_anbima_mercado_secundario_debentures.txt' in file_name:
+                mercado_secundario_debentures.main()
+            if '_anbima_mercado_secundario_titulos_publicos.txt' in file_name:
+                mercado_secundario_titulos_publicos.main()                
         if processor_name == 'b3':
             print(f'Processor {processor_name} is running')
         if processor_name == 'bacen':
@@ -37,5 +36,4 @@ def main():
 
 
 if __name__ == '__main__':
-    # fire.Fire()
     main()
