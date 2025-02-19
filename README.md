@@ -54,18 +54,34 @@ $ pwsh ./dependencias.ps1
 $ pwsh ./download_files.ps1
 ```
 
-
 # Running Python Scripts to Download Files
 
 ```sh
 $ python ./download_files.py
 ```
 
+# Running Python Scripts KYD to Download Files
+
+```sh
+$ python ./download_files_kyd.py
+```
+
+# Running Python Scripts Selenium to Download Files
+
+```sh
+$ python ./download_files_selenium.py
+```
 
 # Running all downloads
 
 ```sh
 $ task start
+```
+
+# Running the importers to staging area
+
+```sh
+$ task processor
 ```
 
 

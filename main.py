@@ -5,7 +5,7 @@ import fire
 import download_files
 import download_files_kyd
 import download_files_selenium
-
+import processor
 
 def kyd():
     print('download_kyd')
@@ -33,6 +33,11 @@ def all():
     legacy()
     # selenium()
     powershell()
+
+
+def processor():
+    print('processor')
+    processor.main()
 
 
 if __name__ == '__main__':
