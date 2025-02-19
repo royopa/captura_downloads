@@ -1,8 +1,13 @@
 {
 	"image": "mcr.microsoft.com/devcontainers/universal:2",
 	"features": {
-		"ghcr.io/devcontainers/features/powershell:1": {},
-		"ghcr.io/devcontainers-extra/features/poetry:2": {}
+		"ghcr.io/devcontainers/features/powershell:1": {
+			"version": "7.4"
+		},
+		"ghcr.io/devcontainers-extra/features/poetry:2": {
+			"version": "latest"
+		},
+		"ghcr.io/flexwie/devcontainer-features/op:1": {}
 	},
 	// Uncomment the next line to run commands after the container is created.
 	"postCreateCommand": "pwsh -File dependencias.ps1 && poetry install && poetry env activate",
