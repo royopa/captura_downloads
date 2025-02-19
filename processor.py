@@ -9,13 +9,10 @@ from captura_downloads.etls.anbima import (
     mercado_secundario_debentures,
     mercado_secundario_titulos_publicos,
 )
-
-
 from captura_downloads.etls.b3 import (
     capital_social_empresas,
     instrumentos_listados,
 )
-
 
 load_dotenv()
 
@@ -45,12 +42,12 @@ def main():
                 capital_social_empresas.main()
             if '_b3_instrumentos_listados.csv' in file_name:
                 instrumentos_listados.main()
-        '''
+        """
         if processor_name == 'bacen':
             print(f'Processor {processor_name} is running')
         if processor_name == 'debentures':
             print(f'Processor {processor_name} is running')
-        '''
+        """
 
 
 if __name__ == '__main__':

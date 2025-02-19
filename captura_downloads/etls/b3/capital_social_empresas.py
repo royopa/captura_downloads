@@ -1,8 +1,8 @@
+import json
 import os
 from datetime import datetime
 from pathlib import Path
 
-import json
 import bizdays
 import pandas as pd
 from dotenv import load_dotenv
@@ -68,7 +68,7 @@ def transform(file_path):
     # Ler o conteúdo do arquivo JSON
     with open(file_path, 'r', encoding='utf-8') as file:
         json_data = file.read()
-    
+
     # Carregar o JSON em um dicionário Python
     data = json.loads(json_data)
     df = pd.DataFrame(data.get('results'))

@@ -65,11 +65,7 @@ def transform(file_path):
     data_referencia = cal.offset(data_atual, -1)
 
     df = pd.read_csv(
-        file_path,
-        sep=';',
-        encoding='utf-8',
-        skiprows=1,
-        low_memory=False
+        file_path, sep=';', encoding='utf-8', skiprows=1, low_memory=False
     )
 
     a_renomear = {
@@ -131,7 +127,9 @@ def transform(file_path):
 
     for column_name in df.columns:
         if column_name.startswith('DT_'):
-            df[column_name] = pd.to_datetime(df[column_name], format='%Y-%m-%d', errors='coerce')
+            df[column_name] = pd.to_datetime(
+                df[column_name], format='%Y-%m-%d', errors='coerce'
+            )
     df = convert_columns_dtypes(df)
 
     file_name = Path(file_path).name
