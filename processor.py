@@ -13,6 +13,7 @@ from captura_downloads.etls.anbima import (
 
 from captura_downloads.etls.b3 import (
     capital_social_empresas,
+    instrumentos_listados,
 )
 
 
@@ -29,7 +30,6 @@ def main():
         file_path = os.path.join(download_path, file_name)
         print(file_date, processor_name, file_name)
 
-        '''
         if processor_name == 'anbima':
             print(f'Processor {processor_name} is running')
             if '_anbima_ima_completo.txt' in file_name:
@@ -39,11 +39,12 @@ def main():
                 mercado_secundario_debentures.main()
             if '_anbima_mercado_secundario_titulos_publicos.txt' in file_name:
                 mercado_secundario_titulos_publicos.main()
-        '''
         if processor_name == 'b3':
             print(f'Processor {processor_name} is running')
             if '_b3_capital_social_empresas.json' in file_name:
                 capital_social_empresas.main()
+            if '_b3_instrumentos_listados.csv' in file_name:
+                instrumentos_listados.main()
         '''
         if processor_name == 'bacen':
             print(f'Processor {processor_name} is running')

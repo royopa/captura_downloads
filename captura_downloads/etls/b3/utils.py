@@ -65,9 +65,13 @@ def get_sqlalchemy_dtypes(df):
 def load_with_bcp(file_path):
     file_name = Path(file_path).name
     schema = file_name.split('_')[1]
-    table_name = file_name.split('_b3_')[1].replace('.csv', '')
-    table_name = file_name.split('_b3_')[1].replace('.json', '')
+    table_name = file_name.split('_b3_')[1].split('.')[0]
+    table_name = table_name.replace('.csv', '')
+    table_name = table_name.replace('.json', '')
+    table_name = table_name.replace('.txt', '')
+    table_name = table_name.replace('.csv', '')
     table_name = table_name.replace('_utf8', '')
+
     server = os.getenv('DB_SERVER')
     database = os.getenv('DB_DATABASE')
     user = os.getenv('DB_USER')

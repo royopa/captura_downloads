@@ -103,8 +103,11 @@ def transform(file_path):
     file_name = Path(file_path).name
     schema = file_name.split('_')[1]
     table_name = file_name.split('_anbima_')[1].split('.')[0]
+    table_name = table_name.replace('.txt', '')
+    table_name = table_name.replace('.csv', '')
+    table_name = table_name.replace('_utf8', '')
 
-    print('Creating table no database...', end=' ')
+    print(f'Creating table {schema}.{table_name} na base de dados...', end=' ')
     df.head(0).to_sql(
         table_name,
         con=get_engine(),

@@ -2,7 +2,6 @@ import os
 from datetime import datetime
 from pathlib import Path
 
-import json
 import bizdays
 import pandas as pd
 from dotenv import load_dotenv
@@ -21,7 +20,7 @@ def main():
     data_atual = datetime.now()
     data_arquivo = data_atual.strftime('%Y%m%d')
     project_root_folder = Path(__file__).resolve().parents[3]
-    file_name = f'{data_arquivo}_b3_capital_social_empresas.json'
+    file_name = f'{data_arquivo}_b3_instrumentos_listados.csv'
     file_path = os.path.join(project_root_folder, 'downloads_bulk', file_name)
 
     if not os.path.exists(file_path):
@@ -47,11 +46,11 @@ def extract(file_path):
     file_name = Path(file_path).name
     print(f'Processing file {file_name} in folder {folder_path}')
 
-    file_name_out = file_name.replace('.json', '_utf8.json')
+    file_name_out = file_name.replace('.csv', '_utf8.csv')
     layout_path = os.path.join(folder_path, file_name_out)
 
     with open(layout_path, 'w', encoding='utf-8') as layout_file:
-        with open(file_path, 'r', encoding='utf-8') as file:
+        with open(file_path, 'r', encoding='latin1') as file:
             for line in file:
                 layout_file.write(line)
 
@@ -65,40 +64,74 @@ def transform(file_path):
     cal = bizdays.Calendar.load('B3')
     data_referencia = cal.offset(data_atual, -1)
 
-    # Ler o conteúdo do arquivo JSON
-    with open(file_path, 'r', encoding='utf-8') as file:
-        json_data = file.read()
-    
-    # Carregar o JSON em um dicionário Python
-    data = json.loads(json_data)
-    df = pd.DataFrame(data.get('results'))
-
-    df.insert(0, 'DT_REF', data_referencia)
+    df = pd.read_csv(
+        file_path,
+        sep=';',
+        encoding='utf-8',
+        skiprows=1,
+        low_memory=False
+    )
 
     a_renomear = {
-        'tradingName': 'NO_TRADING_NAME',
-        'issuingCompany': 'NO_ISSUING_COMPANY',
-        'companyName': 'NO_COMPANY',
-        'market': 'NO_MARKET',
-        'typeCapital': 'NO_TYPE_CAPITAL',
-        'value': 'VR_CAPITAL',
-        'approvedDate': 'DT_APPROVED',
-        'commonShares': 'NU_COMMON_SHARES',
-        'preferredShares': 'NU_PREFERRED_SHARES',
-        'totalQtyShares': 'NU_TOTAL_QTY_SHARES',
+        'RptDt': 'DT_REF',
+        'TckrSymb': 'NO_TICKER',
+        'Asst': 'NO_MERCADORIA',
+        'AsstDesc': 'DE_MERCADORIA',
+        'SgmtNm': 'NO_SEGMENTO',
+        'MktNm': 'NO_MERCADO',
+        'SctyCtgyNm': 'NO_CATEGORIA',
+        'XprtnDt': 'DT_VENCTO',
+        'XprtnCd': 'CO_EXPIRACAO',
+        'TradgStartDt': 'DT_INI_NEGOCIACAO',
+        'TradgEndDt': 'DT_FIM_NEGOCIACAO',
+        'BaseCd': 'CO_BASE_CONTAGEM_DIAS',
+        'ConvsCritNm': 'NO_CRITERIO_CONVERSAO',
+        'MtrtyDtTrgtPt': 'NU_PONTOS_VENCTO',
+        'ReqrdConvsInd': 'IC_CONVERSAO_REQUERIDA',
+        'ISIN': 'CO_ISIN',
+        'CFICd': 'CO_CFI',
+        'DlvryNtceStartDt': 'DT_INI_AVISO_ENTREGA',
+        'DlvryNtceEndDt': 'DT_FIM_AVISO_ENTREGA',
+        'OptnTp': 'NO_TIPO_OPCAO',
+        'CtrctMltplr': 'VR_MULTIPLO_CONTRATO',
+        'AsstQtnQty': 'VR_QTD_MERCADORIA',
+        'AllcnRndLot': 'NU_LOTE_ALOCACAO',
+        'TradgCcy': 'NO_MOEDA_NEGOCIACAO',
+        'DlvryTpNm': 'NO_TIPO_ENTREGA',
+        'WdrwlDays': 'NU_DIAS_SAQUE',
+        'WrkgDays': 'NU_DIAS_UTEIS',
+        'ClnrDays': 'NU_DIAS_CORRIDOS',
+        'RlvrBasePricNm': 'NO_PRECO_BASE_LIQUIDACAO',
+        'OpngFutrPosDay': 'NU_DIAS_POSICAO_FUTURA',
+        'SdTpCd1': 'NO_POSICAO_1',
+        'UndrlygTckrSymb1': 'CO_ATIVO_OBJETO_1',
+        'SdTpCd2': 'NU_POSICAO_2',
+        'UndrlygTckrSymb2': 'CO_ATIVO_OBJETO_2',
+        'PureGoldWght': 'VR_PESO_OURO',
+        'ExrcPric': 'VR_PRECO_EXERCICIO',
+        'OptnStyle': 'NO_ESTILO_OPCAO',
+        'ValTpNm': 'NO_TIPO_VALORIZACAO',
+        'PrmUpfrntInd': 'IC_PREMIO_ANTECIPADO',
+        'OpngPosLmtDt': 'DT_LIMITE_POSICAO',
+        'DstrbtnId': 'CO_DISTRIBUICAO',
+        'PricFctr': 'NU_FATOR_PRECO',
+        'DaysToSttlm': 'NU_DIAS_LIQUIDACAO',
+        'SrsTpNm': 'NO_TIPO_SERIE',
+        'PrtcnFlg': 'IC_PROTECAO',
+        'AutomtcExrcInd': 'IC_EXERCICIO_AUTOMATICO',
+        'SpcfctnCd': 'CO_ESPECIFICACAO_ACAO',
+        'CrpnNm': 'NO_INSTITUICAO',
+        'CorpActnStartDt': 'DT_INI_ACAO_CORPORATIVA',
+        'CtdyTrtmntTpNm': 'NO_TIPO_TRATAMENTO_CUSTODIA',
+        'MktCptlstn': 'VR_CAPITAL_SOCIAL',
+        'CorpGovnLvlNm': 'NO_NIVEL_GOVERNANCA',
     }
 
     df = df.rename(columns=a_renomear)
 
-    df['DT_REF'] = pd.to_datetime(df['DT_REF'])
-    df['DT_APPROVED'] = pd.to_datetime(df['DT_APPROVED'], format='%d/%m/%Y')
-
     for column_name in df.columns:
-        if column_name.startswith('NU_') or column_name.startswith('VR_'):
-            df[column_name] = df[column_name].str.replace('.', '')
-            df[column_name] = df[column_name].str.replace(',', '.')
-            df[column_name] = pd.to_numeric(df[column_name], errors='coerce')
-
+        if column_name.startswith('DT_'):
+            df[column_name] = pd.to_datetime(df[column_name], format='%Y-%m-%d', errors='coerce')
     df = convert_columns_dtypes(df)
 
     file_name = Path(file_path).name
@@ -110,7 +143,7 @@ def transform(file_path):
     table_name = table_name.replace('.csv', '')
     table_name = table_name.replace('_utf8', '')
 
-    print('Creating table no database...', end=' ')
+    print(f'Creating table {schema}.{table_name} in database...', end=' ')
     df.head(0).to_sql(
         table_name,
         con=get_engine(),
@@ -122,8 +155,7 @@ def transform(file_path):
     print('OK')
 
     print('Reformatting csv file to bcp import...', end=' ')
-    file_path_out = file_path.replace('.txt', '.csv')
-    file_path_out = file_path.replace('.json', '.csv')
+    file_path_out = file_path
     df.to_csv(
         file_path_out,
         sep=';',
