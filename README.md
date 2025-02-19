@@ -1,6 +1,6 @@
 # Getting Started
 
-O Python >=3.12 e o poetry >=2.0.0 e <3.0.0 são necessários para esse projeto.
+O Python 3.12 e o poetry são necessários para rodar esse projeto.
 
 # Configurar o ambiente
 
