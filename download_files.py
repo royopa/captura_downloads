@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 import requests
 import yaml
 from bizdays import Calendar
-from clint.textui import colored
+from termcolor import colored, cprint
 
 
 # Função para ler o conteúdo do YAML
@@ -56,9 +56,8 @@ def save_response(url, destination_path, type_response):
         with open(destination_path, 'wb') as file:
             file.write(response.content)
 
-    print(
-        colored.green(f"Arquivo {type_response} salvo em '{destination_path}'")
-    )
+    message = f"Arquivo {type_response} salvo em '{destination_path}'"
+    cprint(message, 'green')
 
 
 def get_b3_token(url_token: str):
@@ -155,17 +154,11 @@ def main():
             try:
                 # Salve a resposta conforme o tipo
                 save_response(url, caminho_destino, resource['type_response'])
-                print(
-                    colored.green(
-                        f"Recurso '{resource['name']}' baixado com sucesso."
-                    )
-                )
+                message = f"Recurso '{resource['name']}' baixado com sucesso."
+                cprint(message, 'green')
             except Exception as e:
-                print(
-                    colored.red(
-                        f"Falha ao baixar o recurso '{resource['name']}' de '{url}'. Erro: {e}"
-                    )
-                )
+                message = f"Falha ao baixar o recurso '{resource['name']}' de '{url}'. Erro: {e}"
+                cprint(message, 'red')
 
 
 if __name__ == '__main__':
