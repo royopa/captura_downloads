@@ -11,6 +11,7 @@ from captura_downloads.etls.anbima import (
 )
 from captura_downloads.etls.b3 import (
     capital_social_empresas,
+    carteiras_teoricas,
     instrumentos_listados,
 )
 
@@ -42,6 +43,11 @@ def main():
                 capital_social_empresas.main()
             if '_b3_instrumentos_listados.csv' in file_name:
                 instrumentos_listados.main()
+            if '_b3_carteira_teorica_' in file_name:
+                try:
+                    carteiras_teoricas.main(file_path, data_referencia)
+                except Exception as e:
+                    continue
         """
         if processor_name == 'bacen':
             print(f'Processor {processor_name} is running')

@@ -64,6 +64,9 @@ def get_sqlalchemy_dtypes(df):
 
 def load_with_bcp(file_path):
     file_name = Path(file_path).name
+    if not file_name.endswith('.csv'):
+        return
+
     schema = file_name.split('_')[1]
     table_name = file_name.split('_b3_')[1].split('.')[0]
     table_name = table_name.replace('.csv', '')
