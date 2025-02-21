@@ -33,7 +33,7 @@ def main(file_path, data_referencia):
             f'File extracted not found: {file_path_extracted}'
         )
 
-    file_path_transformed = transform(file_path_extracted)
+    file_path_transformed = transform(file_path_extracted, data_referencia)
     if file_path_transformed is None or not os.path.exists(
         file_path_transformed
     ):
@@ -82,7 +82,7 @@ def extract(file_path):
     return layout_path
 
 
-def transform(file_path):
+def transform(file_path, data_referencia):
     file_name = Path(file_path).name
 
     if '.csv_utf8.base64' not in file_name:
@@ -95,9 +95,8 @@ def transform(file_path):
         print('File not expected')
         return
 
-    data_atual = datetime.now()
     cal = bizdays.Calendar.load('B3')
-    data_referencia = cal.offset(data_atual, 0)
+    data_referencia = cal.offset(data_referencia, 0)
 
     df = pd.read_csv(
         file_path,
