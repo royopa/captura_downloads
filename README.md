@@ -1,6 +1,19 @@
 # Captura Downloads
 
-Um sistema abrangente e profissional para download, processamento e armazenamento de dados financeiros brasileiros. Este projeto automatiza a coleta de dados de múltiplas fontes institucionais incluindo ANBIMA, B3, CVM e outras entidades financeiras, com suporte a múltiplas tecnologias e plataformas.
+## 📋 Descrição do Projeto
+
+**Captura Downloads** é uma plataforma robusta e profissional para coleta, processamento e armazenamento automatizado de dados financeiros brasileiros. O sistema integra múltiplas fontes institucionais (ANBIMA, B3, CVM, BACEN) através de diferentes tecnologias, oferecendo uma solução completa para análise de mercado e gestão de dados financeiros.
+
+### 🎯 **Objetivo Principal**
+Automatizar a captura de dados financeiros críticos para análise de mercado, gestão de risco e tomada de decisões estratégicas no mercado financeiro brasileiro.
+
+### 🔍 **Problema Resolvido**
+- Elimina a necessidade de downloads manuais de dados financeiros
+- Padroniza o processamento de dados de múltiplas fontes
+- Garante consistência e confiabilidade na coleta de informações
+- Reduz tempo e erros humanos no processo de ETL financeiro
+
+---
 
 ## 🚀 Características Principais
 
@@ -23,12 +36,16 @@ Um sistema abrangente e profissional para download, processamento e armazenament
 - **Tratamento de Erros**: Recuperação robusta de falhas
 - **Configuração Flexível**: Arquivos YAML para diferentes ambientes
 
+---
+
 ## 📋 Pré-requisitos
 
 - **Python 3.11+** com Poetry
 - **PowerShell 7+** (para scripts Windows)
 - **Docker** (para SQL Server)
 - **Conexão com internet** para downloads
+
+---
 
 ## 🛠️ Instalação Rápida
 
@@ -54,6 +71,8 @@ pwsh ./dependencias.ps1
 cp .env.example .env
 # Edite .env com suas configurações de banco
 ```
+
+---
 
 ## 🚀 Uso Rápido
 
@@ -88,6 +107,8 @@ python processor.py
 .\run_sqlcmd.ps1 -SqlFilePath ".\sql\create_tables.sql"
 ```
 
+---
+
 ## 🏗️ Arquitetura do Sistema
 
 ```
@@ -110,6 +131,8 @@ captura_downloads/
 └── 📄 *.ps1                      # Scripts PowerShell
 ```
 
+---
+
 ## 🔧 Configuração Detalhada
 
 ### **Variáveis de Ambiente**
@@ -131,6 +154,8 @@ B3_API_KEY=your_key
 - `resources_python.yaml`: Configuração para Python
 - `pyproject.toml`: Dependências Python
 - `mkdocs.yml`: Configuração da documentação
+
+---
 
 ## 🧪 Desenvolvimento
 
@@ -165,6 +190,8 @@ task docs
 # Acesse: http://localhost:8000
 ```
 
+---
+
 ## 📊 Monitoramento e Logs
 
 ### **Estrutura de Logs**
@@ -181,6 +208,8 @@ Os logs são estruturados com timestamp, nível, módulo e mensagem:
 - **WARNING**: Situações que merecem atenção
 - **ERROR**: Erros que impedem a operação
 - **DEBUG**: Informações detalhadas para desenvolvimento
+
+---
 
 ## 🔍 Troubleshooting
 
@@ -215,6 +244,8 @@ $env:LOG_LEVEL="DEBUG"
 .\download_files.ps1
 ```
 
+---
+
 ## 🤝 Contribuição
 
 ### **Fluxo de Desenvolvimento**
@@ -235,6 +266,8 @@ test: adiciona testes para downloader KYD
 refactor: reorganiza estrutura de classes
 ```
 
+---
+
 ## 📚 Documentação Completa
 
 Para documentação detalhada, acesse:
@@ -243,13 +276,19 @@ Para documentação detalhada, acesse:
 - **📊 [Estrutura de Dados](docs/data-structure.md)** - Formato dos dados
 - **🚀 [API Reference](docs/api.md)** - Referência da API
 
+---
+
 ## 📄 Licença
 
 Este projeto está licenciado sob a **MIT License** - veja o arquivo [LICENSE](LICENSE) para detalhes.
 
+---
+
 ## 👨‍💻 Autor
 
 **Rodrigo Prado de Jesus** - [royopa@gmail.com](mailto:royopa@gmail.com)
+
+---
 
 ## 🙏 Agradecimentos
 
@@ -257,6 +296,8 @@ Este projeto está licenciado sob a **MIT License** - veja o arquivo [LICENSE](L
 - **B3** por dados de bolsa e instrumentos financeiros
 - **CVM** por dados regulatórios e de fundos
 - **Comunidade financeira brasileira** por padrões e protocolos
+
+---
 
 ## 📈 Roadmap
 
