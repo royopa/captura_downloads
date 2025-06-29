@@ -4,7 +4,7 @@ from google.cloud import bigquery
 
 logging.basicConfig(level=logging.INFO)
 
-project_id = 'kyd-storage'
+project_id = "kyd-storage"
 
 client = bigquery.Client(project=project_id)
 

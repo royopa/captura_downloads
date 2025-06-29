@@ -7,9 +7,8 @@ import pandas as pd
 
 
 def check_missing_dates(
-    cal_name, bucket, prefix, filename_pattern=None, project='kyd-storage-001'
+    cal_name, bucket, prefix, filename_pattern=None, project="kyd-storage-001"
 ):
-
     cal = bizdays.Calendar.load(cal_name)
 
     client = storage.Client()
@@ -19,27 +18,25 @@ def check_missing_dates(
     names = [blob.name for blob in blobs]
     filenames = [os.path.split(n)[1] for n in names]
     if filename_pattern is None:
-        dates = [os.path.splitext(f)[0] for f in filenames if f != '']
+        dates = [os.path.splitext(f)[0] for f in filenames if f != ""]
     else:
         dates = [
-            datetime.strptime(f, filename_pattern).strftime('%Y-%m-%d')
+            datetime.strptime(f, filename_pattern).strftime("%Y-%m-%d")
             for f in filenames
-            if f != ''
+            if f != ""
         ]
     dates.sort()
-    bizdates = [
-        date.strftime('%Y-%m-%d') for date in cal.seq(dates[0], dates[-1])
-    ]
+    bizdates = [date.strftime("%Y-%m-%d") for date in cal.seq(dates[0], dates[-1])]
     missing = [bizdate for bizdate in bizdates if bizdate not in dates]
     missing.sort()
 
     return {
-        'bucket': bucket.name,
-        'prefix': prefix,
-        'start': min(dates),
-        'end': max(dates),
-        'missing_dates': missing,
-        'number_of_files': len(dates),
+        "bucket": bucket.name,
+        "prefix": prefix,
+        "start": min(dates),
+        "end": max(dates),
+        "missing_dates": missing,
+        "number_of_files": len(dates),
     }
 
 
@@ -71,7 +68,7 @@ def check_missing_dates(
 # print(check_missing_dates("B3", "ks-rawdata-b3", "IndicadoresFinanceiros"))
 # print(check_missing_dates("B3", "ks-rawdata-b3", "PricingReport", "PR%y%m%d.zip"))
 # print(check_missing_dates("B3", "ks-rawdata-b3", "TaxaCambioReferencial"))
-print(check_missing_dates('ANBIMA', 'ks-rawdata-anbima-deb', ''))
+print(check_missing_dates("ANBIMA", "ks-rawdata-anbima-deb", ""))
 # print(check_missing_dates("ANBIMA", "ks-rawdata-anbima-titpub", ""))
 # print(check_missing_dates("ANBIMA", "ks-rawdata-anbima-vnatitpub", ""))
 

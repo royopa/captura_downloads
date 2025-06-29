@@ -5,7 +5,7 @@ import sys
 import kyd.data.downloaders as dw
 from kyd.data.logs import save_download_logs
 
-sys.path.append('../functions/')
+sys.path.append("../functions/")
 
 
 logging.basicConfig(level=logging.DEBUG)
@@ -65,9 +65,7 @@ dt = datetime.date(2023, 2, 24)
 #     res = dw.download_by_config(config, dw.save_file_to_temp_folder, refdate=dt)
 #     save_download_logs(res)
 
-with open('../config/b3-otc-trade-information-consolidated.json') as fp:
+with open("../config/b3-otc-trade-information-consolidated.json") as fp:
     config = fp.read()
-    res = dw.download_by_config(
-        config, dw.save_file_to_temp_folder, refdate=dt
-    )
+    res = dw.download_by_config(config, dw.save_file_to_temp_folder, refdate=dt)
     save_download_logs(res)

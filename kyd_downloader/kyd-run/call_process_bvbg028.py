@@ -8,19 +8,19 @@ import requests
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 # logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
-fh = logging.FileHandler('log.txt')
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+fh = logging.FileHandler("log.txt")
+formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 fh.setFormatter(formatter)
 logger.addHandler(fh)
 
 
 def call_url(log):
-    url = 'https://us-central1-kyd-storage-001.cloudfunctions.net/kyd-generic-process-file'
+    url = "https://us-central1-kyd-storage-001.cloudfunctions.net/kyd-generic-process-file"
     res = requests.post(url, json=log)
-    logger.info('finished %s %s', log['refdate'], res.status_code)
+    logger.info("finished %s %s", log["refdate"], res.status_code)
 
 
-cal = bizdays.Calendar.load('ANBIMA.cal')
+cal = bizdays.Calendar.load("ANBIMA.cal")
 
 # threads = []
 # for date in cal.seq('2020-01-01', '2020-12-31'):
@@ -45,10 +45,10 @@ cal = bizdays.Calendar.load('ANBIMA.cal')
 # 2021-07-13
 
 log = {
-    'bucket': 'ks-rawdata-b3',
-    'filename': 'CadInstr/IN210908.zip',
-    'refdate': '2021-09-08',
-    'name': 'cadinstr',
+    "bucket": "ks-rawdata-b3",
+    "filename": "CadInstr/IN210908.zip",
+    "refdate": "2021-09-08",
+    "name": "cadinstr",
 }
 
 call_url(log)

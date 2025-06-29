@@ -15,7 +15,7 @@ logging.basicConfig(level=logging.DEBUG)
 # cal = bizdays.Calendar(weekdays=('sat', 'sun'))
 
 dt = date(2021, 7, 16)
-with open('../config/vna_anbima.json') as fp:
+with open("../config/vna_anbima.json") as fp:
     content = fp.read()
     download_by_config(content, save_file_to_output_bucket, dt)
 # with open('../config/pricereport.json') as fp:

@@ -4,10 +4,10 @@ import pandas as pd
 import pandas_gbq
 from bizdays import Calendar, set_option
 
-set_option('mode', 'pandas')
+set_option("mode", "pandas")
 
 
-project_id = 'kyd-storage'
+project_id = "kyd-storage"
 
 df_symbols = pandas_gbq.read_gbq(
     """
@@ -43,25 +43,23 @@ where symbol is null
     )
 
 
-logger = logging.getLogger('pandas_gbq')
+logger = logging.getLogger("pandas_gbq")
 logger.setLevel(logging.ERROR)
 logger.addHandler(logging.StreamHandler())
 
 gaps = []
 for idx in df_symbols.index:
-    symbol = df_symbols.loc[idx, 'symbol']
+    symbol = df_symbols.loc[idx, "symbol"]
     print(symbol)
-    last_date = df_symbols.loc[idx, 'last_date']
-    first_date = df_symbols.loc[idx, 'first_date']
+    last_date = df_symbols.loc[idx, "last_date"]
+    first_date = df_symbols.loc[idx, "first_date"]
     df = _(symbol, first_date, last_date)
-    df['symbol'] = symbol
+    df["symbol"] = symbol
     gaps.append(df)
 
 df_count = pd.concat(gaps)
-df_count['symbol'].value_counts().to_csv('gap_count.csv')
-df_count.to_csv('gaps.csv')
-cal = Calendar.load('B3')
-df_symbols['bizdays'] = cal.bizdays(
-    df_symbols['first_date'], df_symbols['last_date']
-)
-df_symbols.to_csv('dates.csv')
+df_count["symbol"].value_counts().to_csv("gap_count.csv")
+df_count.to_csv("gaps.csv")
+cal = Calendar.load("B3")
+df_symbols["bizdays"] = cal.bizdays(df_symbols["first_date"], df_symbols["last_date"])
+df_symbols.to_csv("dates.csv")

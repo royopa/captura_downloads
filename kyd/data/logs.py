@@ -5,57 +5,57 @@ from google.cloud import datastore
 
 
 def _create_downloadlog_key(data):
-    return '{}:{:.0f}'.format(data['name'], data['time'].timestamp())
+    return "{}:{:.0f}".format(data["name"], data["time"].timestamp())
 
 
 def _format(data):
-    print(data['refdate'])
+    print(data["refdate"])
     try:
-        data['refdate'] = data['refdate'] and datetime.strptime(
-            data['refdate'], '%Y-%m-%dT%H:%M:%S.%f%z'
+        data["refdate"] = data["refdate"] and datetime.strptime(
+            data["refdate"], "%Y-%m-%dT%H:%M:%S.%f%z"
         )
     except:
-        data['refdate'] = data['refdate'] and datetime.strptime(
-            data['refdate'], '%Y-%m-%dT%H:%M:%S.%f'
+        data["refdate"] = data["refdate"] and datetime.strptime(
+            data["refdate"], "%Y-%m-%dT%H:%M:%S.%f"
         )
 
-    if data['refdate']:
-        data['refdate'].replace(tzinfo=pytz.timezone('America/Sao_Paulo'))
-    data['time'] = datetime.strptime(data['time'], '%Y-%m-%dT%H:%M:%S.%f%z')
+    if data["refdate"]:
+        data["refdate"].replace(tzinfo=pytz.timezone("America/Sao_Paulo"))
+    data["time"] = datetime.strptime(data["time"], "%Y-%m-%dT%H:%M:%S.%f%z")
 
 
 def save_download_logs(data):
     _format(data)
 
     client = datastore.Client()
-    key = client.key('DownloadLog', _create_downloadlog_key(data))
+    key = client.key("DownloadLog", _create_downloadlog_key(data))
     log_entry = datastore.Entity(key)
     log_entry.update(data)
     client.put(log_entry)
 
 
 def save_process_logs(data):
-    parent = data['parent']
+    parent = data["parent"]
     _format(parent)
 
     client = datastore.Client()
-    parent_key = client.key('DownloadLog', _create_downloadlog_key(parent))
-    if data.get('results'):
-        for pr in data['results']:
-            key = client.key('ProcessorLog', parent=parent_key)
+    parent_key = client.key("DownloadLog", _create_downloadlog_key(parent))
+    if data.get("results"):
+        for pr in data["results"]:
+            key = client.key("ProcessorLog", parent=parent_key)
             log_entry = datastore.Entity(key)
-            pr['time'] = data['time']
-            pr['processor_name'] = data['processor_name']
+            pr["time"] = data["time"]
+            pr["processor_name"] = data["processor_name"]
             log_entry.update(pr)
             client.put(log_entry)
     else:
-        key = client.key('ProcessorLog', parent=parent_key)
+        key = client.key("ProcessorLog", parent=parent_key)
         log_entry = datastore.Entity(key)
         log_entry.update(
             {
-                'error': data['error'],
-                'time': data['time'],
-                'processor_name': data['processor_name'],
+                "error": data["error"],
+                "time": data["time"],
+                "processor_name": data["processor_name"],
             }
         )
         client.put(log_entry)

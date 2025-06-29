@@ -5,16 +5,14 @@ from datetime import datetime
 import bizdays
 import requests
 
-logging.basicConfig(
-    level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s'
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 
 
 def call_url1(refdate, name):
-    url = f'https://kyd-storage-001.rj.r.appspot.com/reprocess?refdate={refdate}&name={name}'
+    url = f"https://kyd-storage-001.rj.r.appspot.com/reprocess?refdate={refdate}&name={name}"
     res = requests.get(url)
-    logging.info('finished download %s %s %s', name, refdate, res.status_code)
-    logging.info('  url %s', url)
+    logging.info("finished download %s %s %s", name, refdate, res.status_code)
+    logging.info("  url %s", url)
     return res.status_code
 
 
@@ -25,9 +23,9 @@ def call_url1(refdate, name):
 #     "name": "pricereport"
 # }
 def call_url2(log):
-    url = 'https://us-central1-kyd-storage-001.cloudfunctions.net/kyd-generic-process-file'
+    url = "https://us-central1-kyd-storage-001.cloudfunctions.net/kyd-generic-process-file"
     res = requests.post(url, json=log)
-    logging.info('finished convert %s %s', log['refdate'], res.status_code)
+    logging.info("finished convert %s %s", log["refdate"], res.status_code)
     return res.status_code
 
 
@@ -79,8 +77,8 @@ def call_url2(log):
 # ]
 
 
-cal = bizdays.Calendar.load('B3')
-dates = cal.seq('2022-12-22', '2023-02-23')
+cal = bizdays.Calendar.load("B3")
+dates = cal.seq("2022-12-22", "2023-02-23")
 
 for date in dates:
     # date = datetime.strptime(date, '%Y-%m-%d')
@@ -91,8 +89,8 @@ for date in dates:
     #     "name": "pricereport"
     # }
     # call_url2(log)
-    date = date.strftime('%Y-%m-%d')
-    call_url1(date, 'b3-otc-instruments-consolidated')
+    date = date.strftime("%Y-%m-%d")
+    call_url1(date, "b3-otc-instruments-consolidated")
     # call_url1(date, 'b3-otc-trade-information-consolidated')
     time.sleep(5)
 

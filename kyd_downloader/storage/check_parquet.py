@@ -9,11 +9,11 @@ from kyd.parsers import unzip_file_to
 from kyd.parsers.anbima import AnbimaVnaTPF
 
 storage_client = storage.Client()
-filename = 'gs://ks-rawdata-anbima-vnatitpub/2019-01-09.html'
+filename = "gs://ks-rawdata-anbima-vnatitpub/2019-01-09.html"
 blob = Blob.from_string(filename)
 
 handle, foutput = tempfile.mkstemp()
-tempf = os.fdopen(handle, 'w+b')
+tempf = os.fdopen(handle, "w+b")
 storage_client.download_blob_to_file(blob, tempf)
 tempf.flush()
 tempf.seek(0)

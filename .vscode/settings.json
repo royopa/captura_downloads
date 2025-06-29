@@ -4,5 +4,6 @@
     "workbench.editor.showTabs": "multiple",
     "editor.rulers": [
         80,120
-    ]
+    ],
+    "python.languageServer": "None"
 }

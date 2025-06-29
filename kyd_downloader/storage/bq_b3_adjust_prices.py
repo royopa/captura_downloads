@@ -5,13 +5,13 @@ import pandas as pd
 import pandas_gbq
 from google.cloud import bigquery
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
 
-project_id = 'kyd-storage'
+project_id = "kyd-storage"
 
 client = bigquery.Client(project=project_id)
 
-logging.info('fetching data')
+logging.info("fetching data")
 start_time = time.time()
 df_eq = pd.read_gbq(
     """
@@ -46,41 +46,41 @@ df_eq = pd.read_gbq(
     ret.refdate desc
 """,
     project_id=project_id,
-    dialect='standard',
+    dialect="standard",
 )
 
 # 'SHARES', 'FUNDS', 'UNIT', 'BDR', 'ETF FOREIGN INDEX', 'ETF EQUITIES', 'INDEX'
 
 end_time = time.time()
 
-logging.info('data selected')
+logging.info("data selected")
 
 
 def _(df_eq):
     logging.info(f"{df_eq['symbol'].iloc[0]} - rows: {df_eq.shape[0]}")
-    df_eq['refdate'] = df_eq['refdate'].astype(str)
-    df_eq = df_eq.sort_values('refdate', ascending=False).reset_index()
-    f = 1 + df_eq['pct_return']
+    df_eq["refdate"] = df_eq["refdate"].astype(str)
+    df_eq = df_eq.sort_values("refdate", ascending=False).reset_index()
+    f = 1 + df_eq["pct_return"]
     f = f.cumprod()
     f = f.shift()
     f.iloc[0] = 1
-    df_eq['close'] = df_eq.loc[0, 'close'] / f
+    df_eq["close"] = df_eq.loc[0, "close"] / f
     # df_eq = df_eq.drop("close", axis="columns")
 
     return df_eq
 
 
-logging.info('processing')
+logging.info("processing")
 
-df_ad = df_eq.groupby('symbol').apply(_).reset_index(drop=True)
+df_ad = df_eq.groupby("symbol").apply(_).reset_index(drop=True)
 
 end_time_process = time.time()
 
 pandas_gbq.to_gbq(
     df_ad,
-    'layer2.tb_equities_adjusted_aux',
+    "layer2.tb_equities_adjusted_aux",
     project_id=project_id,
-    if_exists='replace',
+    if_exists="replace",
 )
 
 end_time_push = time.time()
@@ -106,10 +106,6 @@ end_time_push = time.time()
 # )
 # results = query_job.result()
 
-logging.info('Download time = {:.3f} seconds'.format(end_time - start_time))
-logging.info(
-    'Process time  = {:.3f} seconds'.format(end_time_process - end_time)
-)
-logging.info(
-    'Push time     = {:.3f} seconds'.format(end_time_push - end_time_process)
-)
+logging.info("Download time = {:.3f} seconds".format(end_time - start_time))
+logging.info("Process time  = {:.3f} seconds".format(end_time_process - end_time))
+logging.info("Push time     = {:.3f} seconds".format(end_time_push - end_time_process))

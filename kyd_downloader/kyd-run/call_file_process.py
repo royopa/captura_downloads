@@ -7,42 +7,36 @@ import google.auth.transport.requests
 import google.oauth2.id_token
 import requests
 
-bizdays.set_option('mode', 'datetime')
+bizdays.set_option("mode", "datetime")
 
 
 def get_id_token(url):
     _request = google.auth.transport.requests.Request()
     id_token = google.oauth2.id_token.fetch_id_token(_request, url)
-    logging.info('token %s', id_token)
+    logging.info("token %s", id_token)
     return id_token
 
 
-url = 'https://kyd-process-file-kb2piwuv2q-uc.a.run.app'
+url = "https://kyd-process-file-kb2piwuv2q-uc.a.run.app"
 token = get_id_token(url)
 
 
 def call_url(log):
-    res = requests.post(
-        url, json=log, headers={'Authorization': f'Bearer {token}'}
-    )
-    logger.info(
-        'finished %s %s %s', log['name'], log['refdate'], res.status_code
-    )
+    res = requests.post(url, json=log, headers={"Authorization": f"Bearer {token}"})
+    logger.info("finished %s %s %s", log["name"], log["refdate"], res.status_code)
     if res.status_code > 400:
         time.sleep(0.5)
         _token = get_id_token(url)
         res = requests.post(
-            url, json=log, headers={'Authorization': f'Bearer {_token}'}
+            url, json=log, headers={"Authorization": f"Bearer {_token}"}
         )
-        logger.info(
-            'finished %s %s %s', log['name'], log['refdate'], res.status_code
-        )
+        logger.info("finished %s %s %s", log["name"], log["refdate"], res.status_code)
 
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-fh = logging.FileHandler('log.txt')
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+fh = logging.FileHandler("log.txt")
+formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 fh.setFormatter(formatter)
 logger.addHandler(fh)
 
@@ -111,17 +105,17 @@ dates = [
 
 for date in dates:
     # b = "ks-rawdata-anbima-titpub"  # "ks-rawdata-bvmf",
-    b = 'ks-rawdata-anbima-deb'  # "ks-rawdata-bvmf",
-    s = '%Y-%m-%d.txt'  # "IPN/GPS/BVBG.087.01/IR%y%m%d.zip"
+    b = "ks-rawdata-anbima-deb"  # "ks-rawdata-bvmf",
+    s = "%Y-%m-%d.txt"  # "IPN/GPS/BVBG.087.01/IR%y%m%d.zip"
     # n = "titpub_anbima"
-    n = 'deb_anbima'
+    n = "deb_anbima"
     log = {
-        'bucket': b,
-        'filename': date.strftime(s),
-        'refdate': date.strftime('%Y-%m-%dT%H:%M:%S.%f%z'),
-        'name': n,
-        'time': datetime.now(timezone.utc).isoformat(),
-        'download_status': 200,
+        "bucket": b,
+        "filename": date.strftime(s),
+        "refdate": date.strftime("%Y-%m-%dT%H:%M:%S.%f%z"),
+        "name": n,
+        "time": datetime.now(timezone.utc).isoformat(),
+        "download_status": 200,
     }
     # logger.info(date)
     call_url(log)

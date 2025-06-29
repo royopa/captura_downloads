@@ -6,7 +6,7 @@ from google.cloud import bigquery
 
 logging.basicConfig(level=logging.INFO)
 
-project_id = 'kyd-storage'
+project_id = "kyd-storage"
 
 client = bigquery.Client(project=project_id)
 
@@ -138,38 +138,38 @@ WHERE specification_code not in ('DRN', 'CI')
 )
 """,
     project_id=project_id,
-    dialect='standard',
+    dialect="standard",
 )
 
 
 def _(df_eq):
-    df_eq['refdate'] = df_eq['refdate'].astype(str)
-    df_eq = df_eq.sort_values('refdate', ascending=False).reset_index()
-    f = 1 + df_eq['oscillation_percentage'] / 100
+    df_eq["refdate"] = df_eq["refdate"].astype(str)
+    df_eq = df_eq.sort_values("refdate", ascending=False).reset_index()
+    f = 1 + df_eq["oscillation_percentage"] / 100
     f = f.cumprod()
     f = f.shift()
     f.iloc[0] = 1
-    df_eq['adj_close'] = df_eq.loc[0, 'close'] / f
-    df_eq['adj_open'] = df_eq['adj_close'] * (
-        1 - (df_eq['close'] - df_eq['open']) / df_eq['close']
+    df_eq["adj_close"] = df_eq.loc[0, "close"] / f
+    df_eq["adj_open"] = df_eq["adj_close"] * (
+        1 - (df_eq["close"] - df_eq["open"]) / df_eq["close"]
     )
-    df_eq['adj_high'] = df_eq['adj_close'] * (
-        1 - (df_eq['close'] - df_eq['high']) / df_eq['close']
+    df_eq["adj_high"] = df_eq["adj_close"] * (
+        1 - (df_eq["close"] - df_eq["high"]) / df_eq["close"]
     )
-    df_eq['adj_low'] = df_eq['adj_close'] * (
-        1 - (df_eq['close'] - df_eq['low']) / df_eq['close']
+    df_eq["adj_low"] = df_eq["adj_close"] * (
+        1 - (df_eq["close"] - df_eq["low"]) / df_eq["close"]
     )
 
     return df_eq
 
 
-df_ad = df_eq.groupby('symbol').apply(_).reset_index(drop=True)
+df_ad = df_eq.groupby("symbol").apply(_).reset_index(drop=True)
 
 pandas_gbq.to_gbq(
     df_ad,
-    'layer1_b3.tb_equities_adjusted_aux',
+    "layer1_b3.tb_equities_adjusted_aux",
     project_id=project_id,
-    if_exists='replace',
+    if_exists="replace",
 )
 
 query_job = client.query(

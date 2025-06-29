@@ -7,7 +7,7 @@ from airflow.providers.google.cloud.transfers.gcs_to_bigquery import (
     GCSToBigQueryOperator,
 )
 
-bq_dataset_name = 'kyd-storage:layer1_b3'
+bq_dataset_name = "kyd-storage:layer1_b3"
 
 # If you are running Airflow in more than one time zone
 # see https://airflow.apache.org/docs/apache-airflow/stable/timezone.html
@@ -15,107 +15,106 @@ bq_dataset_name = 'kyd-storage:layer1_b3'
 YESTERDAY = datetime.datetime.now() - datetime.timedelta(days=1)
 
 default_args = {
-    'owner': 'Load B3 Data to bigquery',
-    'depends_on_past': False,
-    'email': [''],
-    'email_on_failure': False,
-    'email_on_retry': False,
-    'retries': 1,
-    'retry_delay': datetime.timedelta(minutes=5),
-    'start_date': YESTERDAY,
+    "owner": "Load B3 Data to bigquery",
+    "depends_on_past": False,
+    "email": [""],
+    "email_on_failure": False,
+    "email_on_retry": False,
+    "retries": 1,
+    "retry_delay": datetime.timedelta(minutes=5),
+    "start_date": YESTERDAY,
 }
 
 with models.DAG(
-    'load_b3_data_to_bigquery',
-    'catchup=False',
+    "load_b3_data_to_bigquery",
+    "catchup=False",
     default_args=default_args,
     schedule_interval=datetime.timedelta(days=1),
 ) as dag:
-
     make_bq_dataset = bash.BashOperator(
-        task_id='make_bq_dataset',
+        task_id="make_bq_dataset",
         # Executing 'bq' command requires Google Cloud SDK which comes
         # preinstalled in Cloud Composer.
-        bash_command=f'bq ls {bq_dataset_name} || bq mk {bq_dataset_name}',
+        bash_command=f"bq ls {bq_dataset_name} || bq mk {bq_dataset_name}",
     )
 
     load_raw_indexdata = GCSToBigQueryOperator(
-        task_id='load_raw_indexdata',
-        bucket='ks-layer1',
-        source_objects=['BVBG087/IndxInf/*.parquet'],
-        source_format='PARQUET',
-        destination_project_dataset_table=f'{bq_dataset_name}.raw_indexdata',
-        write_disposition='WRITE_TRUNCATE',
+        task_id="load_raw_indexdata",
+        bucket="ks-layer1",
+        source_objects=["BVBG087/IndxInf/*.parquet"],
+        source_format="PARQUET",
+        destination_project_dataset_table=f"{bq_dataset_name}.raw_indexdata",
+        write_disposition="WRITE_TRUNCATE",
         autodetect=True,
     )
 
     load_raw_iopvdata = GCSToBigQueryOperator(
-        task_id='load_raw_iopvdata',
-        bucket='ks-layer1',
-        source_objects=['BVBG087/IOPVInf/*.parquet'],
-        source_format='PARQUET',
-        destination_project_dataset_table=f'{bq_dataset_name}.raw_iopvdata',
-        write_disposition='WRITE_TRUNCATE',
+        task_id="load_raw_iopvdata",
+        bucket="ks-layer1",
+        source_objects=["BVBG087/IOPVInf/*.parquet"],
+        source_format="PARQUET",
+        destination_project_dataset_table=f"{bq_dataset_name}.raw_iopvdata",
+        write_disposition="WRITE_TRUNCATE",
         autodetect=True,
     )
 
     load_raw_bdrdata = GCSToBigQueryOperator(
-        task_id='load_raw_bdrdata',
-        bucket='ks-layer1',
-        source_objects=['BVBG087/BDRInf/*.parquet'],
-        source_format='PARQUET',
-        destination_project_dataset_table=f'{bq_dataset_name}.raw_bdrdata',
-        write_disposition='WRITE_TRUNCATE',
+        task_id="load_raw_bdrdata",
+        bucket="ks-layer1",
+        source_objects=["BVBG087/BDRInf/*.parquet"],
+        source_format="PARQUET",
+        destination_project_dataset_table=f"{bq_dataset_name}.raw_bdrdata",
+        write_disposition="WRITE_TRUNCATE",
         autodetect=True,
     )
 
     load_raw_marketdata = GCSToBigQueryOperator(
-        task_id='load_raw_marketdata',
-        bucket='ks-layer1',
-        source_objects=['BVBG086/*.parquet'],
-        source_format='PARQUET',
-        destination_project_dataset_table=f'{bq_dataset_name}.raw_marketdata',
-        write_disposition='WRITE_TRUNCATE',
+        task_id="load_raw_marketdata",
+        bucket="ks-layer1",
+        source_objects=["BVBG086/*.parquet"],
+        source_format="PARQUET",
+        destination_project_dataset_table=f"{bq_dataset_name}.raw_marketdata",
+        write_disposition="WRITE_TRUNCATE",
         autodetect=True,
     )
 
     load_raw_equitydata = GCSToBigQueryOperator(
-        task_id='load_raw_equitydata',
-        bucket='ks-layer1',
-        source_objects=['BVBG028/EqtyInf/*.parquet'],
-        source_format='PARQUET',
-        destination_project_dataset_table=f'{bq_dataset_name}.raw_equitydata',
-        write_disposition='WRITE_TRUNCATE',
+        task_id="load_raw_equitydata",
+        bucket="ks-layer1",
+        source_objects=["BVBG028/EqtyInf/*.parquet"],
+        source_format="PARQUET",
+        destination_project_dataset_table=f"{bq_dataset_name}.raw_equitydata",
+        write_disposition="WRITE_TRUNCATE",
         autodetect=True,
     )
 
     load_raw_futuredata = GCSToBigQueryOperator(
-        task_id='load_raw_futuredata',
-        bucket='ks-layer1',
-        source_objects=['BVBG028/FutrCtrctsInf/*.parquet'],
-        source_format='PARQUET',
-        destination_project_dataset_table=f'{bq_dataset_name}.raw_futuredata',
-        write_disposition='WRITE_TRUNCATE',
+        task_id="load_raw_futuredata",
+        bucket="ks-layer1",
+        source_objects=["BVBG028/FutrCtrctsInf/*.parquet"],
+        source_format="PARQUET",
+        destination_project_dataset_table=f"{bq_dataset_name}.raw_futuredata",
+        write_disposition="WRITE_TRUNCATE",
         autodetect=True,
     )
 
     load_raw_equityoptiondata = GCSToBigQueryOperator(
-        task_id='load_raw_equityoptiondata',
-        bucket='ks-layer1',
-        source_objects=['BVBG028/OptnOnEqtsInf/*.parquet'],
-        source_format='PARQUET',
-        destination_project_dataset_table=f'{bq_dataset_name}.raw_equityoptiondata',
-        write_disposition='WRITE_TRUNCATE',
+        task_id="load_raw_equityoptiondata",
+        bucket="ks-layer1",
+        source_objects=["BVBG028/OptnOnEqtsInf/*.parquet"],
+        source_format="PARQUET",
+        destination_project_dataset_table=f"{bq_dataset_name}.raw_equityoptiondata",
+        write_disposition="WRITE_TRUNCATE",
         autodetect=True,
     )
 
     load_raw_cotahist = GCSToBigQueryOperator(
-        task_id='load_raw_cotahist',
-        bucket='ks-layer1',
-        source_objects=['COTAHIST/*.parquet'],
-        source_format='PARQUET',
-        destination_project_dataset_table=f'{bq_dataset_name}.raw_cotahistdata',
-        write_disposition='WRITE_TRUNCATE',
+        task_id="load_raw_cotahist",
+        bucket="ks-layer1",
+        source_objects=["COTAHIST/*.parquet"],
+        source_format="PARQUET",
+        destination_project_dataset_table=f"{bq_dataset_name}.raw_cotahistdata",
+        write_disposition="WRITE_TRUNCATE",
         autodetect=True,
     )
 
@@ -215,14 +214,14 @@ group by
     symbol;
 """
     bq_create_tb_equity = bigquery.BigQueryInsertJobOperator(
-        task_id='bq_create_tb_equity',
+        task_id="bq_create_tb_equity",
         configuration={
-            'query': {
-                'query': QUERY_TB_EQUITY,
-                'useLegacySql': False,
+            "query": {
+                "query": QUERY_TB_EQUITY,
+                "useLegacySql": False,
             }
         },
-        location='US',
+        location="US",
     )
 
     make_bq_dataset >> [

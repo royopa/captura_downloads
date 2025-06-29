@@ -27,18 +27,14 @@ class PortugueseRulesParser2(PortugueseRulesParser):
 
     def parseDate_ptBR(self, text, match):
         r"""(\d{2})/(\d{2})/(\d{4})"""
-        return '{}-{}-{}'.format(
-            match.group(3), match.group(2), match.group(1)
-        )
+        return "{}-{}-{}".format(match.group(3), match.group(2), match.group(1))
 
     def parseDate_YYYYMMDD(self, text, match):
         r"""(\d{4})(\d{2})(\d{2})"""
-        return '{}-{}-{}'.format(
-            match.group(1), match.group(2), match.group(3)
-        )
+        return "{}-{}-{}".format(match.group(1), match.group(2), match.group(3))
 
 
-def convert_csv_to_dict(file, sep=';', encoding='utf-8'):
+def convert_csv_to_dict(file, sep=";", encoding="utf-8"):
     parser = GenericParser()
     for ix, line in enumerate(file):
         line = line.decode(encoding).strip()
@@ -58,7 +54,7 @@ def read_fwf(con, widths, colnames=None, skip=0, parse_fun=lambda x: x):
         x = x + w
 
     colnames = (
-        ['V{}'.format(ix + 1) for ix in range(len(widths))]
+        ["V{}".format(ix + 1) for ix in range(len(widths))]
         if colnames is None
         else colnames
     )
@@ -89,11 +85,11 @@ def str_or_none(val):
     return str(val) if val else None
 
 
-def unzip_and_get_content(fname, index=-1, encode=False, encoding='latin1'):
-    with open(fname, 'rb') as temp:
+def unzip_and_get_content(fname, index=-1, encode=False, encoding="latin1"):
+    with open(fname, "rb") as temp:
         zf = zipfile.ZipFile(temp)
         name = zf.namelist()[index]
-        logging.info('zipped file %s', name)
+        logging.info("zipped file %s", name)
         content = zf.read(name)
         zf.close()
     # temp.close()
@@ -104,7 +100,7 @@ def unzip_and_get_content(fname, index=-1, encode=False, encoding='latin1'):
 
 
 def unzip_to(fname, dest, index=-1):
-    with open(fname, 'rb') as temp:
+    with open(fname, "rb") as temp:
         fp = unzip_file_to(temp, dest, index)
 
     return fp
@@ -113,7 +109,7 @@ def unzip_to(fname, dest, index=-1):
 def unzip_file_to(temp, dest, index=-1):
     zf = zipfile.ZipFile(temp)
     name = zf.namelist()[index]
-    logging.info('zipped file %s', name)
+    logging.info("zipped file %s", name)
     zf.extract(name, dest)
     zf.close()
 
@@ -142,7 +138,7 @@ class DateField(Field):
 
 
 class NumericField(Field):
-    def __init__(self, width, dec=0, sign=''):
+    def __init__(self, width, dec=0, sign=""):
         super(NumericField, self).__init__(width)
         self.dec = dec
         self.sign = sign
@@ -208,8 +204,8 @@ class FWFFileMeta(type):
 class FWFFile(metaclass=FWFFileMeta):
     skip_row = 0
 
-    def __init__(self, fname, encoding='UTF8'):
-        with open(fname, 'r', encoding=encoding) as fp:
+    def __init__(self, fname, encoding="UTF8"):
+        with open(fname, "r", encoding=encoding) as fp:
             for ix, line in enumerate(fp):
                 if ix < self.skip_row:
                     continue
@@ -226,7 +222,7 @@ class FWFFile(metaclass=FWFFileMeta):
                 self._buckets[row_name].append(obj)
 
     def __getattribute__(self, name: str):
-        buckets = super(FWFFile, self).__getattribute__('_buckets')
+        buckets = super(FWFFile, self).__getattribute__("_buckets")
         if name in buckets:
             return buckets[name]
         else:

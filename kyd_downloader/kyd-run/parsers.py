@@ -24,10 +24,10 @@ logging.basicConfig(level=logging.INFO)
 
 class Processor:
     def format_refdate(self, refdate: str):
-        if self.name == 'cotahist':
+        if self.name == "cotahist":
             return refdate[:4]
         else:
-            m = re.search(r'\d{4}-\d\d-\d\d', refdate)
+            m = re.search(r"\d{4}-\d\d-\d\d", refdate)
             return m.group() if m else None
 
     def process(self, fobj, fname, log):
@@ -35,11 +35,11 @@ class Processor:
 
 
 class BVBG028Processor(Processor):
-    name = 'cadinstr'
+    name = "cadinstr"
 
     @property
     def layer1_name(self):
-        return 'BVBG028'
+        return "BVBG028"
 
     def process(self, fobj, fname, log):
         temp = tempfile.gettempdir()
@@ -48,7 +48,7 @@ class BVBG028Processor(Processor):
 
         instrs = {}
         for instr in x.data:
-            typo = instr['instrument_type']
+            typo = instr["instrument_type"]
             try:
                 instrs[typo].append(instr)
             except:
@@ -58,25 +58,25 @@ class BVBG028Processor(Processor):
 
 
 class BVBG086Processor(Processor):
-    name = 'pricereport'
+    name = "pricereport"
 
     @property
     def layer1_name(self):
-        return 'BVBG086'
+        return "BVBG086"
 
     def process(self, fobj, fname, log):
         temp = tempfile.gettempdir()
         tempfname = unzip_file_to(fobj, temp)
         x = BVBG086(tempfname)
-        return {'data': pd.DataFrame(x.data)}
+        return {"data": pd.DataFrame(x.data)}
 
 
 class BVBG087Processor(Processor):
-    name = 'indexreport'
+    name = "indexreport"
 
     @property
     def layer1_name(self):
-        return 'BVBG087'
+        return "BVBG087"
 
     def process(self, fobj, fname, log):
         temp = tempfile.gettempdir()
@@ -85,7 +85,7 @@ class BVBG087Processor(Processor):
 
         instrs = {}
         for instr in x.data:
-            typo = instr['index_type']
+            typo = instr["index_type"]
             try:
                 instrs[typo].append(instr)
             except:
@@ -95,124 +95,110 @@ class BVBG087Processor(Processor):
 
 
 class AnbimaTitpubProcessor(Processor):
-    name = 'titpub_anbima'
+    name = "titpub_anbima"
 
     @property
     def layer1_name(self):
-        return 'AnbimaTitpub'
+        return "AnbimaTitpub"
 
     def process(self, fobj, fname, log):
         x = AnbimaTPF(fname)
         df = pd.DataFrame(x.data)
-        df['ask_yield'] = pd.to_numeric(
-            df['ask_yield'], errors='coerce'
-        ).astype(float)
-        df['bid_yield'] = pd.to_numeric(
-            df['bid_yield'], errors='coerce'
-        ).astype(float)
-        df['ref_yield'] = pd.to_numeric(
-            df['ref_yield'], errors='coerce'
-        ).astype(float)
-        df['price'] = pd.to_numeric(df['price'], errors='coerce').astype(float)
-        x = ~df['ref_yield'].isna()
+        df["ask_yield"] = pd.to_numeric(df["ask_yield"], errors="coerce").astype(float)
+        df["bid_yield"] = pd.to_numeric(df["bid_yield"], errors="coerce").astype(float)
+        df["ref_yield"] = pd.to_numeric(df["ref_yield"], errors="coerce").astype(float)
+        df["price"] = pd.to_numeric(df["price"], errors="coerce").astype(float)
+        x = ~df["ref_yield"].isna()
         if any(x):
             df = df[x].copy()
         else:
-            raise Exception('Invalid data')
-        df['cod_selic'] = df['cod_selic'].astype(int)
-        return {'data': df}
+            raise Exception("Invalid data")
+        df["cod_selic"] = df["cod_selic"].astype(int)
+        return {"data": df}
 
 
 class AnbimaVnaTitpubProcessor(Processor):
-    name = 'vna_anbima'
+    name = "vna_anbima"
 
     @property
     def layer1_name(self):
-        return 'AnbimaVnaTitpub'
+        return "AnbimaVnaTitpub"
 
     def process(self, fobj, fname, log):
         x = AnbimaVnaTPF(fname)
         if len(x.data) == 0:
-            raise Exception('Invalid data')
+            raise Exception("Invalid data")
         df = pd.DataFrame(x.data)
-        return {'data': df}
+        return {"data": df}
 
 
 class DebenturesProcessor(Processor):
-    name = 'deb_anbima'
+    name = "deb_anbima"
 
     @property
     def layer1_name(self):
-        return 'AnbimaDebentures'
+        return "AnbimaDebentures"
 
     def process(self, fobj, fname, log):
         x = AnbimaDebentures(fname)
         if len(x.data) == 0:
-            raise Exception('Invalid data')
+            raise Exception("Invalid data")
         df = pd.DataFrame(x.data)
-        df['refdate'] = log['refdate']
-        df['ask_yield'] = pd.to_numeric(
-            df['ask_yield'], errors='coerce'
+        df["refdate"] = log["refdate"]
+        df["ask_yield"] = pd.to_numeric(df["ask_yield"], errors="coerce").astype(float)
+        df["bid_yield"] = pd.to_numeric(df["bid_yield"], errors="coerce").astype(float)
+        df["ref_yield"] = pd.to_numeric(df["ref_yield"], errors="coerce").astype(float)
+        df["price"] = pd.to_numeric(df["price"], errors="coerce").astype(float)
+        df["perc_price_par"] = pd.to_numeric(
+            df["perc_price_par"], errors="coerce"
         ).astype(float)
-        df['bid_yield'] = pd.to_numeric(
-            df['bid_yield'], errors='coerce'
-        ).astype(float)
-        df['ref_yield'] = pd.to_numeric(
-            df['ref_yield'], errors='coerce'
-        ).astype(float)
-        df['price'] = pd.to_numeric(df['price'], errors='coerce').astype(float)
-        df['perc_price_par'] = pd.to_numeric(
-            df['perc_price_par'], errors='coerce'
-        ).astype(float)
-        df['duration'] = pd.to_numeric(df['duration'], errors='coerce').astype(
+        df["duration"] = pd.to_numeric(df["duration"], errors="coerce").astype(float)
+        df["perc_reune"] = pd.to_numeric(df["perc_reune"], errors="coerce").astype(
             float
         )
-        df['perc_reune'] = pd.to_numeric(
-            df['perc_reune'], errors='coerce'
-        ).astype(float)
-        return {'data': df}
+        return {"data": df}
 
 
 class COTAHISTProcessor(Processor):
-    name = 'cotahist'
+    name = "cotahist"
 
     @property
     def layer1_name(self):
-        return 'COTAHIST'
+        return "COTAHIST"
 
     def process(self, fobj, fname, log):
         temp = tempfile.gettempdir()
         tempfname = unzip_file_to(fobj, temp)
         x = COTAHIST(tempfname)
-        return {'data': pd.DataFrame(x.data)}
+        return {"data": pd.DataFrame(x.data)}
 
 
 class StockIndexInfoProcessor(Processor):
-    name = 'b3-stock-index-info'
+    name = "b3-stock-index-info"
 
     @property
     def layer1_name(self):
-        return 'B3StockIndexInfo'
+        return "B3StockIndexInfo"
 
     def process(self, fobj, fname, log):
         x = StockIndexInfo(fname)
         if len(x.data) == 0:
-            raise Exception('Invalid data')
-        return {'data': x.data}
+            raise Exception("Invalid data")
+        return {"data": x.data}
 
 
 class CDIProcessor(Processor):
-    name = 'cdi'
+    name = "cdi"
 
     @property
     def layer1_name(self):
-        return 'CDI'
+        return "CDI"
 
     def process(self, fobj, fname, log):
         x = CDIIDI(fname)
         if len(x.data) == 0:
-            raise Exception('Invalid data')
-        return {'data': pd.DataFrame(x.data)}
+            raise Exception("Invalid data")
+        return {"data": pd.DataFrame(x.data)}
 
 
 class ProcessorFactory:
@@ -239,38 +225,38 @@ class MainProcessor:
         self.bucket_id = bucket_id
 
     def check(self, log):
-        logging.info('Checking resourses for %s', log['name'])
-        self.processor = ProcessorFactory.build(log['name'])
+        logging.info("Checking resourses for %s", log["name"])
+        self.processor = ProcessorFactory.build(log["name"])
         if self.processor is None:
-            logging.warn('Processor not found: %s', log['name'])
-            raise Exception('Processor not found')
+            logging.warn("Processor not found: %s", log["name"])
+            raise Exception("Processor not found")
 
         self.storage_client = storage.Client()
-        self.filename = 'gs://{}/{}'.format(log['bucket'], log['filename'])
+        self.filename = "gs://{}/{}".format(log["bucket"], log["filename"])
         blob = Blob.from_string(self.filename)
         if not blob.exists(self.storage_client):
-            logging.warn(f'File does not exist: {self.filename}')
-            raise Exception(f'File does not exist: {self.filename}')
+            logging.warn(f"File does not exist: {self.filename}")
+            raise Exception(f"File does not exist: {self.filename}")
         self.blob = blob
 
     def parse(self, log):
-        logging.info('Parsing %s', log['name'])
+        logging.info("Parsing %s", log["name"])
         try:
             handle, foutput = tempfile.mkstemp()
-            tempf = os.fdopen(handle, 'w+b')
+            tempf = os.fdopen(handle, "w+b")
             self.storage_client.download_blob_to_file(self.blob, tempf)
             tempf.flush()
             tempf.seek(0)
             data = self.processor.process(tempf, foutput, log)
         finally:
-            logging.info('Cleaning %s', log['name'])
+            logging.info("Cleaning %s", log["name"])
             tempf.close()
             os.remove(foutput)
-            logging.info('%s removed', foutput)
+            logging.info("%s removed", foutput)
         return data
 
     def save(self, log, data):
-        logging.info('Saving Processor %s', self.processor.name)
+        logging.info("Saving Processor %s", self.processor.name)
         output_bucket = storage.Bucket(
             self.storage_client, self.bucket_id, user_project=self.project_id
         )
@@ -278,55 +264,51 @@ class MainProcessor:
         temp = tempfile.gettempdir()
         for ix in data.keys():
             df = data[ix]
-            logging.info('%s shape %s', self.processor.name, df.shape)
+            logging.info("%s shape %s", self.processor.name, df.shape)
             if len(df) == 0:
-                logging.warn('empty data frame: %s', self.processor.name)
+                logging.warn("empty data frame: %s", self.processor.name)
             fname = os.path.join(temp, ix)
             df.to_parquet(fname)
-            refdate = self.processor.format_refdate(
-                log['refdate'] or log['filename']
-            )
-            prefix = '' if ix == 'data' else f'{ix}/'
-            output_fname = (
-                f'{self.processor.layer1_name}/{prefix}{refdate}.parquet'
-            )
+            refdate = self.processor.format_refdate(log["refdate"] or log["filename"])
+            prefix = "" if ix == "data" else f"{ix}/"
+            output_fname = f"{self.processor.layer1_name}/{prefix}{refdate}.parquet"
             output_blob = Blob(output_fname, output_bucket)
-            with open(fname, 'rb') as fp:
+            with open(fname, "rb") as fp:
                 output_blob.upload_from_file(fp)
-            logging.info('file saved %s', output_fname)
+            logging.info("file saved %s", output_fname)
             gen_files.append(
                 {
-                    'file_refdate': refdate,
-                    'output_fname': output_fname,
-                    'size': output_blob.size,
-                    'data_rows': df.shape[0],
-                    'data_columns': df.shape[1],
+                    "file_refdate": refdate,
+                    "output_fname": output_fname,
+                    "size": output_blob.size,
+                    "data_rows": df.shape[0],
+                    "data_columns": df.shape[1],
                 }
             )
         return gen_files
 
     def process(self, log):
         process_log = {
-            'parent': log,
-            'time': datetime.now(timezone.utc),
-            'processor_name': log['name'],
+            "parent": log,
+            "time": datetime.now(timezone.utc),
+            "processor_name": log["name"],
         }
 
         try:
             self.check(log)
         except Exception as ex:
-            process_log['error'] = str(ex)
+            process_log["error"] = str(ex)
             logging.exception(ex)
-            logging.error('Problems checking resourses for %s', log['name'])
+            logging.error("Problems checking resourses for %s", log["name"])
             return process_log
 
         try:
             data = self.parse(log)
         except Exception as ex:
-            process_log['error'] = str(ex)
+            process_log["error"] = str(ex)
             logging.exception(ex)
-            logging.error(f'Bad file {self.filename}')
+            logging.error(f"Bad file {self.filename}")
             return process_log
 
-        process_log['results'] = self.save(log, data)
+        process_log["results"] = self.save(log, data)
         return process_log

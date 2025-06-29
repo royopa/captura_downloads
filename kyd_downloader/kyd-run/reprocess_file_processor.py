@@ -5,9 +5,9 @@ import pytz
 from google.cloud import datastore
 
 ds_client = datastore.Client()
-q = ds_client.query(kind='ProcessorLog')
+q = ds_client.query(kind="ProcessorLog")
 
-SP_TZ = pytz.timezone('America/Sao_Paulo')
+SP_TZ = pytz.timezone("America/Sao_Paulo")
 UTC = pytz.utc
 # date = datetime.now(SP_TZ) + timedelta(-1)
 date = datetime(2022, 1, 28)
@@ -15,8 +15,8 @@ t1 = date.replace(hour=0, minute=0, second=0, microsecond=0)
 t2 = date.replace(hour=23, minute=59, second=59, microsecond=999999)
 t1 = t1.astimezone(UTC)
 t2 = t2.astimezone(UTC)
-q.add_filter('time', '>=', t1)
-q.add_filter('time', '<=', t2)
+q.add_filter("time", ">=", t1)
+q.add_filter("time", "<=", t2)
 
 # logs = list(q.fetch())
 
@@ -32,7 +32,7 @@ import json
 
 def myconverter(o):
     if isinstance(o, datetime):
-        return o.strftime('%Y-%m-%dT%H:%M:%S.%f%z')
+        return o.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
 
 
 import google.auth.transport.requests
@@ -47,7 +47,7 @@ def get_id_token(url):
 
 import requests
 
-url = 'https://kyd-process-file-kb2piwuv2q-uc.a.run.app'
+url = "https://kyd-process-file-kb2piwuv2q-uc.a.run.app"
 id_token = get_id_token(url)
 
 parents = {}
@@ -61,18 +61,16 @@ for log in q.fetch():
 
 
 for parent in parents.values():
-    parent['time'] = parent['time'].strftime('%Y-%m-%dT%H:%M:%S.%f%z')
-    if parent['refdate']:
-        parent['refdate'] = parent['refdate'].astimezone(
-            pytz.timezone('America/Sao_Paulo')
+    parent["time"] = parent["time"].strftime("%Y-%m-%dT%H:%M:%S.%f%z")
+    if parent["refdate"]:
+        parent["refdate"] = parent["refdate"].astimezone(
+            pytz.timezone("America/Sao_Paulo")
         )
-        parent['refdate'] = parent['refdate'].strftime(
-            '%Y-%m-%dT%H:%M:%S.%f%z'
-        )
+        parent["refdate"] = parent["refdate"].strftime("%Y-%m-%dT%H:%M:%S.%f%z")
 
     payload = dict(parent)
-    payload.pop('message')
+    payload.pop("message")
     res = requests.post(
-        url, json=payload, headers={'Authorization': f'bearer {id_token}'}
+        url, json=payload, headers={"Authorization": f"bearer {id_token}"}
     )
-    print(parent['name'], res)
+    print(parent["name"], res)

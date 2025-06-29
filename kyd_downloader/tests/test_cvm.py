@@ -5,7 +5,7 @@ import textparser
 from google.cloud import storage
 
 
-def handle_csv(file, sep=';', encoding='utf-8'):
+def handle_csv(file, sep=";", encoding="utf-8"):
     parser = textparser.GenericParser()
     for ix, line in enumerate(file):
         line = line.decode(encoding).strip()
@@ -16,9 +16,9 @@ def handle_csv(file, sep=';', encoding='utf-8'):
 
 
 storage_client = storage.Client()
-bucket = storage_client.get_bucket('ks-tmp')
-blob = bucket.get_blob('inf_diario_fi_202005.csv')
-temp = tempfile.TemporaryFile('wb+')
+bucket = storage_client.get_bucket("ks-tmp")
+blob = bucket.get_blob("inf_diario_fi_202005.csv")
+temp = tempfile.TemporaryFile("wb+")
 blob.download_to_file(temp)
 temp.seek(0)
 

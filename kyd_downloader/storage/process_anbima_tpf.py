@@ -9,31 +9,31 @@ from matplotlib.pyplot import text
 
 from kyd.parsers.anbima import AnbimaTPF
 
-logging.basicConfig(level=logging.INFO)   # filename='AnbimaTitpub.log',
+logging.basicConfig(level=logging.INFO)  # filename='AnbimaTitpub.log',
 
 storage_client = storage.Client()
 output_bucket = storage.Bucket(
-    storage_client, 'ks-layer1', user_project='kyd-storage-001'
+    storage_client, "ks-layer1", user_project="kyd-storage-001"
 )
 bucket = storage.Bucket(
-    storage_client, 'ks-rawdata-anbima-titpub', user_project='kyd-storage-001'
+    storage_client, "ks-rawdata-anbima-titpub", user_project="kyd-storage-001"
 )
-blobs = list(storage_client.list_blobs(bucket, prefix='2022-01-20'))
+blobs = list(storage_client.list_blobs(bucket, prefix="2022-01-20"))
 
-logging.info('%s blobs to process', len(blobs))
+logging.info("%s blobs to process", len(blobs))
 
 temp = tempfile.gettempdir()
 # tempf = os.path.join(temp, 'tpf.txt')
-fname = os.path.join(temp, 'tpf')
+fname = os.path.join(temp, "tpf")
 
 for blob in blobs:
     logging.info(blob.name)
-    if not blob.name.endswith('.txt'):
-        logging.error('Not a txt file %s', blob.name)
+    if not blob.name.endswith(".txt"):
+        logging.error("Not a txt file %s", blob.name)
         continue
 
     handle, output = tempfile.mkstemp()
-    tempf = os.fdopen(handle, 'w+b')
+    tempf = os.fdopen(handle, "w+b")
     storage_client.download_blob_to_file(blob, tempf)
     tempf.seek(0)
     tempf.flush()
@@ -47,17 +47,17 @@ for blob in blobs:
     # logging.info(output)
     x = AnbimaTPF(output)
     df = pd.DataFrame(x.data)
-    df['ask_yield'] = pd.to_numeric(df['ask_yield'], errors='coerce')
-    df['bid_yield'] = pd.to_numeric(df['bid_yield'], errors='coerce')
-    df['ref_yield'] = pd.to_numeric(df['ref_yield'], errors='coerce')
-    x = ~df['ref_yield'].isna()
+    df["ask_yield"] = pd.to_numeric(df["ask_yield"], errors="coerce")
+    df["bid_yield"] = pd.to_numeric(df["bid_yield"], errors="coerce")
+    df["ref_yield"] = pd.to_numeric(df["ref_yield"], errors="coerce")
+    x = ~df["ref_yield"].isna()
     if any(x):
         df = df[x].copy()
     else:
-        logging.error(f'File with invalid data {blob.name}')
+        logging.error(f"File with invalid data {blob.name}")
         continue
     # df = df.astype(str)
-    df['cod_selic'] = df['cod_selic'].astype(int)
+    df["cod_selic"] = df["cod_selic"].astype(int)
 
     # refdate = df['refdate'][0]
     # df.to_parquet(fname)

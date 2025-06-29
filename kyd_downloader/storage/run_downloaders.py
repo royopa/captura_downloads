@@ -8,11 +8,13 @@ dates = [
     # "2016-05-12",
     # "2016-06-30",
     # "2017-05-02",
-    '2022-02-23',
+    "2022-02-23",
 ]
 
-name = 'indexreport'
+name = "indexreport"
 for date in dates:
-    url = f'https://kyd-storage-001.rj.r.appspot.com/reprocess?refdate={date}&name={name}'
+    url = (
+        f"https://kyd-storage-001.rj.r.appspot.com/reprocess?refdate={date}&name={name}"
+    )
     res = requests.get(url)
     print(res.status_code)
